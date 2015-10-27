@@ -12,7 +12,12 @@ extension PonyChatUI.Entity {
     
     public class Message {
         
-        typealias Sender = (isOwnSender: Bool, senderID: String, senderNickname: String, senderAvatarURLString: String)
+        struct Sender {
+            var isOwnSender: Bool = false
+            var senderID: String = ""
+            var senderNickname: String = ""
+            var senderAvatarURLString: String = ""
+        }
         
         enum SendingStatus {
             case None;

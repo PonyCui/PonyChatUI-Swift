@@ -14,6 +14,8 @@ extension PonyChatUI.UserInterface {
         
         public func main(messageManager: PonyChatUI.MessageManager) -> (PonyChatUI.UserInterface.MainViewController, UIView) {
             let mainViewController = MainViewController()
+            mainViewController.eventHandler.interactor.manager = messageManager
+            messageManager.delegate = mainViewController.eventHandler.interactor
             return (mainViewController, mainViewController.view)
         }
         

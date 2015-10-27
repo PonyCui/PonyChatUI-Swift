@@ -13,6 +13,8 @@ extension PonyChatUI.UserInterface {
     
     public class MainViewController: UIViewController, ASTableViewDataSource, ASTableViewDelegate {
         
+        let eventHandler = MainPresenter()
+        
         let messagingView: ASTableView = ASTableView()
         
         deinit {
@@ -22,6 +24,7 @@ extension PonyChatUI.UserInterface {
         
         override public func viewDidLoad() {
             super.viewDidLoad()
+            eventHandler.userInterface = self
             configureMessagingView()
             view.addSubview(messagingView)
         }
@@ -41,6 +44,7 @@ extension PonyChatUI.UserInterface {
             messagingView.backgroundColor = UIColor(red: 235.0/255.0, green: 235.0/255.0, blue: 235.0/255.0, alpha: 1.0)
             messagingView.asyncDelegate = self
             messagingView.asyncDataSource = self
+            messagingView.separatorStyle = .None
         }
         
         public func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
@@ -48,10 +52,24 @@ extension PonyChatUI.UserInterface {
         }
         
         public func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
-            return 1
+            if let items = eventHandler.interactor.manager?.items {
+                return items.count
+            }
+            return 0
         }
         
         public func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
+            if let items = eventHandler.interactor.manager?.items {
+                if indexPath.row < items.count {
+                    let messageItem = items[indexPath.row]
+                    if let messageItem = messageItem as? PonyChatUI.Entity.TextMessage {
+                        return TextMessageCellNode(messageItem: messageItem)
+                    }
+                    else {
+                        return MessageCellNode(messageItem: messageItem)
+                    }
+                }
+            }
             return ASCellNode()
         }
         

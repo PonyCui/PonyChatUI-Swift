@@ -12,10 +12,20 @@ extension PonyChatUI {
     
     public class MessageManager {
         
-        var items: [Entity.Message]? = nil
+        public weak var delegate: PonyChatUI.UserInterface.MainInteractor?
+        
+        public var items: [Entity.Message]? = nil
         
         public init() {
+            let debug = Entity.TextMessage(mID: "abc", mDate: NSDate(), text: "Test")
+            var aSender = Entity.Message.Sender()
+            aSender.isOwnSender = false
+            aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
+            debug.messageSender = aSender
             
+            items = [
+                debug
+            ]
         }
         
     }
