@@ -18,6 +18,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadHistory()
         let chatMain = PonyChatUICore.sharedCore.wireframe.main(messageManager)
         chatViewController = chatMain.0
         chatView = chatMain.1
@@ -25,6 +26,19 @@ class ViewController: UIViewController {
         view.addSubview(chatMain.1)
         NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "debug", userInfo: nil, repeats: true)
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    func loadHistory() {
+        var items: [PonyChatUI.Entity.Message] = []
+        for _ in 0...100 {
+            var aSender = PonyChatUI.Entity.Message.Sender()
+            aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
+            aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
+            let message = PonyChatUI.Entity.TextMessage(mID: "test", mDate: NSDate(), text: NSDate().description)
+            message.messageSender = aSender
+            items.append(message)
+        }
+        messageManager.insertItems(items)
     }
     
     func debug() {

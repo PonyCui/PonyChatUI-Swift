@@ -35,6 +35,9 @@ extension PonyChatUI.UserInterface {
             if UIView.areAnimationsEnabled() {
                 UIView.setAnimationsEnabled(true)
             }
+            messagingView.reloadDataWithCompletion({ () -> Void in
+                self.tableViewAutoScroll(force: true, animated: false)
+            })
         }
         
         override public func viewWillLayoutSubviews() {
@@ -50,15 +53,15 @@ extension PonyChatUI.UserInterface {
         }
         
         public func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
-            return 1
-        }
-        
-        public func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
             if let items = eventHandler.interactor.manager?.items {
                 messagingRows = items.count
                 return items.count
             }
             return 0
+        }
+        
+        public func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
+            return 1
         }
         
         public func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
@@ -78,7 +81,9 @@ extension PonyChatUI.UserInterface {
         
         func tableViewAppendRows(count: Int) {
             if messagingRows == 0 {
-                messagingView.reloadData()
+                messagingView.reloadDataWithCompletion({ () -> Void in
+                    self.tableViewAutoScroll()
+                })
                 return
             }
             messagingView.beginUpdates()
@@ -95,16 +100,16 @@ extension PonyChatUI.UserInterface {
             
         }
         
-        func tableViewAutoScroll() {
+        func tableViewAutoScroll(force force: Bool = false, animated: Bool = true) {
             if messagingView.tracking {
                 return
             }
             if let firstIndexPath = messagingView.indexPathsForVisibleRows?.first {
-                if messagingRows - firstIndexPath.row > 30 {
+                if messagingRows - firstIndexPath.row > 30 && !force {
                     return
                 }
             }
-            messagingView.scrollToRowAtIndexPath(NSIndexPath(forRow: messagingRows - 1, inSection: 0), atScrollPosition: .Bottom, animated: true)
+            messagingView.scrollToRowAtIndexPath(NSIndexPath(forRow: messagingRows - 1, inSection: 0), atScrollPosition: .Bottom, animated: animated)
         }
         
     }
