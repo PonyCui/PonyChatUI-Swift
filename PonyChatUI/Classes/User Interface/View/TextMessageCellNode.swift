@@ -27,8 +27,8 @@ extension PonyChatUI.UserInterface {
         
         override func configureNodes() {
             super.configureNodes()
-            addSubnode(backgroundNode)
-            addSubnode(textNode)
+            contentNode.addSubnode(backgroundNode)
+            contentNode.addSubnode(textNode)
         }
         
         override func configureDatas() {
@@ -48,7 +48,7 @@ extension PonyChatUI.UserInterface {
             let superSize = super.calculateSizeThatFits(constrainedSize)
             let textBoxWidth = constrainedSize.width - messagingConfigure.avatarSize.width - messagingConfigure.avatarEdge.left - messagingConfigure.avatarEdge.right - messagingConfigure.textEdge.left - messagingConfigure.textEdge.right - 60.0
             let textSize = self.textNode.measure(CGSize(width: textBoxWidth, height: constrainedSize.height))
-            let requiredHeight = max(superSize.height, textSize.height + messagingConfigure.textEdge.top + messagingConfigure.textEdge.bottom)
+            let requiredHeight = max(superSize.height, nicknameHeight + textSize.height + messagingConfigure.textEdge.top + messagingConfigure.textEdge.bottom)
             contentNode.frame = CGRectMake(0, 0, constrainedSize.width, requiredHeight + messagingConfigure.cellGaps)
             return CGSize(width: constrainedSize.width, height: requiredHeight + messagingConfigure.cellGaps)
         }
@@ -59,10 +59,10 @@ extension PonyChatUI.UserInterface {
                 var textRect = CGRect()
                 textRect.size = self.textNode.calculatedSize
                 if sender.isOwnSender {
-                    textRect.origin = CGPoint(x: avatarNode.frame.origin.x - messagingConfigure.avatarEdge.left - textRect.size.width - messagingConfigure.textEdge.right, y: messagingConfigure.textEdge.top + 3.0)
+                    textRect.origin = CGPoint(x: avatarNode.frame.origin.x - messagingConfigure.avatarEdge.left - textRect.size.width - messagingConfigure.textEdge.right, y: messagingConfigure.textEdge.top + nicknameNode.frame.size.height + 3.0)
                 }
                 else {
-                    textRect.origin = CGPoint(x: avatarNode.frame.origin.x + avatarNode.frame.size.width + messagingConfigure.avatarEdge.right + messagingConfigure.textEdge.left, y: messagingConfigure.textEdge.top + 3.0)
+                    textRect.origin = CGPoint(x: avatarNode.frame.origin.x + avatarNode.frame.size.width + messagingConfigure.avatarEdge.right + messagingConfigure.textEdge.left, y: messagingConfigure.textEdge.top + nicknameNode.frame.size.height + 3.0)
                 }
                 textNode.frame = textRect
                 backgroundNode.image = sender.isOwnSender ? messagingConfigure.textBackgroundSender : messagingConfigure.textBackgroundReceiver

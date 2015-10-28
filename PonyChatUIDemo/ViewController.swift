@@ -45,6 +45,7 @@ class ViewController: UIViewController {
             var aSender = PonyChatUI.Entity.Message.Sender()
             aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
             aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
+            aSender.senderNickname = "Pony"
             let message = PonyChatUI.Entity.TextMessage(mID: "test", mDate: NSDate(), text: NSDate().description)
             message.messageSender = aSender
             items.append(message)
@@ -56,6 +57,7 @@ class ViewController: UIViewController {
         var aSender = PonyChatUI.Entity.Message.Sender()
         aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
         aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
+        aSender.senderNickname = "Pony"
         let message = PonyChatUI.Entity.TextMessage(mID: "test", mDate: NSDate(), text: NSDate().description)
         message.messageSender = aSender
         messageManager.appendItem(message)

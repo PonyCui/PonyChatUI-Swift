@@ -16,6 +16,10 @@ extension PonyChatUI.UserInterface {
         
         public var cellGaps: CGFloat = 8.0
         
+        public var nicknameShow: Bool = false
+        public var nicknameStyle = [String: AnyObject]()
+        public var nicknameEdge = UIEdgeInsets(top: 4, left: 10, bottom: 2, right: 10)
+        
         public var avatarSize = CGSize(width: CGFloat(40.0), height: CGFloat(40.0))
         public var avatarEdge = UIEdgeInsets(top: 5, left: 10, bottom: 0, right: 10)
         public var avatarCornerRadius: CGFloat = 0.0
@@ -27,6 +31,7 @@ extension PonyChatUI.UserInterface {
         
         init() {
             textStyle = defaultTextStyle()
+            nicknameStyle = defaultNicknameStyle()
         }
         
         func defaultTextStyle() -> [String: AnyObject] {
@@ -36,6 +41,12 @@ extension PonyChatUI.UserInterface {
             pStyle.lineSpacing = 6.0
             pStyle.hyphenationFactor = 1.0
             return [NSFontAttributeName: font, NSParagraphStyleAttributeName: pStyle]
+        }
+        
+        func defaultNicknameStyle() -> [String: AnyObject] {
+            let font = UIFont.systemFontOfSize(13)
+            let color = UIColor.grayColor()
+            return [NSFontAttributeName: font, NSForegroundColorAttributeName: color]
         }
         
     }
