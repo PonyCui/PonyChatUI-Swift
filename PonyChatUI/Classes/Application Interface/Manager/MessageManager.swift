@@ -17,9 +17,9 @@ extension PonyChatUI {
         public var items: [Entity.Message]? = nil
         
         public init() {
-            let debug = Entity.TextMessage(mID: "abc", mDate: NSDate(), text: "Test")
+            let debug = Entity.TextMessage(mID: "abc", mDate: NSDate(), text: "🙅")
             var aSender = Entity.Message.Sender()
-            aSender.isOwnSender = false
+            aSender.isOwnSender = true
             aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
             debug.messageSender = aSender
             

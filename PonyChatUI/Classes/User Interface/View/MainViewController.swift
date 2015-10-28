@@ -41,6 +41,7 @@ extension PonyChatUI.UserInterface {
         }
         
         func configureMessagingView() {
+            messagingView.contentInset = UIEdgeInsets(top: 8.0, left: 0.0, bottom: 8.0, right: 0.0)
             messagingView.backgroundColor = UIColor(red: 235.0/255.0, green: 235.0/255.0, blue: 235.0/255.0, alpha: 1.0)
             messagingView.asyncDelegate = self
             messagingView.asyncDataSource = self

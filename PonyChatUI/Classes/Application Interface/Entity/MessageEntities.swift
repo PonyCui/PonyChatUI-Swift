@@ -15,8 +15,25 @@ extension PonyChatUI.Entity {
         struct Sender {
             var isOwnSender: Bool = false
             var senderID: String = ""
-            var senderNickname: String = ""
-            var senderAvatarURLString: String = ""
+            var senderNickname: String = "" {
+                didSet {
+                    if let userInterface = userInterface {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            userInterface.configureDatas()
+                        })
+                    }
+                }
+            }
+            var senderAvatarURLString: String = "" {
+                didSet {
+                    if let userInterface = userInterface {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            userInterface.configureDatas()
+                        })
+                    }
+                }
+            }
+            weak var userInterface: PonyChatUI.UserInterface.MessageCellNode?
         }
         
         enum SendingStatus {

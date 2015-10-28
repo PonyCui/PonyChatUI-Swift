@@ -30,6 +30,7 @@
 		63C4BA2A1BDF8BB10033E9C8 /* MessageCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C4BA291BDF8BB10033E9C8 /* MessageCellNode.swift */; };
 		63C4BA2C1BDF8D6A0033E9C8 /* TextMessageCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C4BA2B1BDF8D6A0033E9C8 /* TextMessageCellNode.swift */; };
 		63C4BA2E1BDF8DC90033E9C8 /* Configable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C4BA2D1BDF8DC90033E9C8 /* Configable.swift */; };
+		63C4BA311BE073900033E9C8 /* PonyChatUI.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63C4BA301BE073900033E9C8 /* PonyChatUI.xcassets */; };
 		EAEEBED36F8BDCCABB7D555B /* Pods_PonyChatUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66CADB9FF5E235D4F41F1424 /* Pods_PonyChatUI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -73,6 +74,7 @@
 		63C4BA291BDF8BB10033E9C8 /* MessageCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCellNode.swift; sourceTree = "<group>"; };
 		63C4BA2B1BDF8D6A0033E9C8 /* TextMessageCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextMessageCellNode.swift; sourceTree = "<group>"; };
 		63C4BA2D1BDF8DC90033E9C8 /* Configable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configable.swift; sourceTree = "<group>"; };
+		63C4BA301BE073900033E9C8 /* PonyChatUI.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PonyChatUI.xcassets; sourceTree = "<group>"; };
 		66CADB9FF5E235D4F41F1424 /* Pods_PonyChatUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PonyChatUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A84F8C38D4B903C7D5FBD562 /* Pods-PonyChatUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PonyChatUI.release.xcconfig"; path = "Pods/Target Support Files/Pods-PonyChatUI/Pods-PonyChatUI.release.xcconfig"; sourceTree = "<group>"; };
 		BB2351508F5DD92F4219AC95 /* Pods-PonyChatUIDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PonyChatUIDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PonyChatUIDemo/Pods-PonyChatUIDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 		6347F0571BDF6A3C006C25F0 /* PonyChatUI */ = {
 			isa = PBXGroup;
 			children = (
+				63C4BA2F1BE073870033E9C8 /* Resources */,
 				63C4BA081BDF6BD80033E9C8 /* Classes */,
 				6347F0851BDF6A99006C25F0 /* PonyChatUI.h */,
 				6347F0841BDF6A99006C25F0 /* Info.plist */,
@@ -242,6 +245,14 @@
 			path = Wireframe;
 			sourceTree = "<group>";
 		};
+		63C4BA2F1BE073870033E9C8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				63C4BA301BE073900033E9C8 /* PonyChatUI.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		B31DB24ED410EDAE0D52C494 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -359,6 +370,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63C4BA311BE073900033E9C8 /* PonyChatUI.xcassets in Resources */,
 				6347F0861BDF6A99006C25F0 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
