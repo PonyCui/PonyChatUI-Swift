@@ -19,6 +19,8 @@ extension PonyChatUI.UserInterface {
         let avatarNode = ASNetworkImageNode(cache: PonyChatUI.ImageCacheManager.sharedManager,
             downloader: PonyChatUI.ImageDownloadManager.sharedManager)
         let nicknameNode = ASTextNode()
+        var sendingIndicatorView: UIActivityIndicatorView? = nil
+        var sendingIndicatorNode: ASDisplayNode? = nil
         let contentNode = ASDisplayNode()
         
         init(messageItem: PonyChatUI.Entity.Message, messagingConfigure: Configure) {
@@ -29,10 +31,12 @@ extension PonyChatUI.UserInterface {
             configureDatas()
         }
         
+        var mainContentRect: CGRect = CGRect()
         func configureNodes() {
             selectionStyle = .None
             addSubnode(contentNode)
             contentNode.addSubnode(avatarNode)
+            self.messageItem.userInterface = self
             if self.messageItem.messageSender != nil {
                 self.messageItem.messageSender!.userInterface = self
             }
@@ -50,6 +54,36 @@ extension PonyChatUI.UserInterface {
                     nicknameNode.attributedString = NSAttributedString(string: sender.senderNickname,
                         attributes: messagingConfigure.nicknameStyle)
                 }
+                if sender.isOwnSender {
+                    configureSendingNodes()
+                }
+            }
+        }
+        
+        func configureSendingNodes() {
+            if messageItem.messageSendingStatus == .Sending {
+                self.sendingIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+                self.sendingIndicatorNode = ASDisplayNode(viewBlock: { () -> UIView! in
+                    self.sendingIndicatorView?.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+                    self.sendingIndicatorView?.startAnimating()
+                    return self.sendingIndicatorView
+                })
+                contentNode.addSubnode(self.sendingIndicatorNode)
+                layoutSendingNodes()
+            }
+            else if messageItem.messageSendingStatus == .Failure {
+                
+            }
+            else {
+                if let indicatorNode = self.sendingIndicatorNode {
+                    indicatorNode.removeFromSupernode()
+                }
+            }
+        }
+        
+        func layoutSendingNodes() {
+            if let indicatorNode = self.sendingIndicatorNode {
+                indicatorNode.frame = CGRect(x: mainContentRect.origin.x - 44.0, y: mainContentRect.size.height / 2.0 + mainContentRect.origin.y - 22.0 - 4.0, width: 44.0, height: 44.0)
             }
         }
         

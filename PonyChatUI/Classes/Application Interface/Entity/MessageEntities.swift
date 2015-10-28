@@ -50,8 +50,18 @@ extension PonyChatUI.Entity {
         public let messageDate: NSDate
         public var messageOreder: Double = 0.0
         public var messageSender: Sender? = nil
-        public var messageSendingStatus: Int = 0
+        public var messageSendingStatus: SendingStatus = .Sending {
+            didSet {
+                if let userInterface = userInterface {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        userInterface.configureDatas()
+                    })
+                }
+            }
+        }
         public var messageAttributes = [String: Any]()
+        
+        weak var userInterface: PonyChatUI.UserInterface.MessageCellNode?
         
         public init(mID: String, mDate: NSDate) {
             messageID = mID

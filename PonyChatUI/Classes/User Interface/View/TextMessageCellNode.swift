@@ -70,6 +70,8 @@ extension PonyChatUI.UserInterface {
                     y: textRect.origin.y - messagingConfigure.textEdge.top,
                     width: textRect.size.width + messagingConfigure.textEdge.left + messagingConfigure.textEdge.right,
                     height: textRect.size.height + messagingConfigure.textEdge.top + messagingConfigure.textEdge.bottom * 2)
+                mainContentRect = backgroundNode.frame
+                layoutSendingNodes()
             }
         }
         
