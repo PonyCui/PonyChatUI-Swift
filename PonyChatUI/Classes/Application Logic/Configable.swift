@@ -12,7 +12,7 @@ extension PonyChatUI.UserInterface {
     
     public struct Configure {
         
-        static var sharedConfigure: Configure = Configure()
+        public static var sharedConfigure: Configure = Configure()
         
         public var cellGaps: CGFloat = 8.0
         

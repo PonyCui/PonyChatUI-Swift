@@ -21,7 +21,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if preloaded {
-            
+            if let chatViewController = chatViewController, let chatView = chatView {
+                chatViewController.removeFromParentViewController()
+                chatView.removeFromSuperview()
+                addChildViewController(chatViewController)
+                view.addSubview(chatView)
+            }
         }
         else {
             loadHistory()
@@ -75,10 +80,6 @@ class ViewController: UIViewController {
             PonyChatUICore.sharedCore.wireframe.preload(nextViewController.messageManager, size: CGSize(width: self.view.bounds.width, height: self.view.bounds.height - 64.0), completion: { (mainViewController, mainView) -> Void in
                 nextViewController.chatViewController = mainViewController
                 nextViewController.chatView = mainView
-                mainViewController.removeFromParentViewController()
-                mainView.removeFromSuperview()
-                nextViewController.addChildViewController(mainViewController)
-                nextViewController.view.addSubview(mainView)
                 self.navigationController?.pushViewController(nextViewController, animated: true)
             })
         }
