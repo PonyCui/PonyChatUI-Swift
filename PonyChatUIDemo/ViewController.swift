@@ -10,6 +10,8 @@ import UIKit
 import PonyChatUI
 
 class ViewController: UIViewController {
+    
+    var preloaded = false
 
     let messageManager = PonyChatUI.MessageManager()
     
@@ -18,14 +20,18 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadHistory()
-        let chatMain = PonyChatUICore.sharedCore.wireframe.main(messageManager)
-        chatViewController = chatMain.0
-        chatView = chatMain.1
-        addChildViewController(chatMain.0)
-        view.addSubview(chatMain.1)
-        NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "debug", userInfo: nil, repeats: true)
-        // Do any additional setup after loading the view, typically from a nib.
+        if preloaded {
+            
+        }
+        else {
+            loadHistory()
+            let chatMain = PonyChatUICore.sharedCore.wireframe.main(messageManager)
+            chatViewController = chatMain.0
+            chatView = chatMain.1
+            addChildViewController(chatMain.0)
+            view.addSubview(chatMain.1)
+        }
+//        NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "debug", userInfo: nil, repeats: true)
     }
     
     func loadHistory() {
@@ -61,6 +67,23 @@ class ViewController: UIViewController {
             chatView.frame = view.bounds
         }
     }
+    
+    @IBAction func handleNextTapped(sender: AnyObject) {
+        if let nextViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ViewController") as? ViewController {
+            nextViewController.preloaded = true
+            nextViewController.loadHistory()
+            PonyChatUICore.sharedCore.wireframe.preload(nextViewController.messageManager, size: CGSize(width: self.view.bounds.width, height: self.view.bounds.height - 64.0), completion: { (mainViewController, mainView) -> Void in
+                nextViewController.chatViewController = mainViewController
+                nextViewController.chatView = mainView
+                mainViewController.removeFromParentViewController()
+                mainView.removeFromSuperview()
+                nextViewController.addChildViewController(mainViewController)
+                nextViewController.view.addSubview(mainView)
+                self.navigationController?.pushViewController(nextViewController, animated: true)
+            })
+        }
+    }
+    
 
 }
 

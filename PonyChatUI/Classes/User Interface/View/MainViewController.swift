@@ -35,9 +35,6 @@ extension PonyChatUI.UserInterface {
             if UIView.areAnimationsEnabled() {
                 UIView.setAnimationsEnabled(true)
             }
-            messagingView.reloadDataWithCompletion({ () -> Void in
-                self.tableViewAutoScroll(force: true, animated: false)
-            })
         }
         
         override public func viewWillLayoutSubviews() {
@@ -50,6 +47,10 @@ extension PonyChatUI.UserInterface {
             messagingView.asyncDelegate = self
             messagingView.asyncDataSource = self
             messagingView.separatorStyle = .None
+            messagingView.frame = self.view.bounds
+            messagingView.reloadDataWithCompletion({ () -> Void in
+                self.tableViewAutoScroll(force: true, animated: false)
+            })
         }
         
         public func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
