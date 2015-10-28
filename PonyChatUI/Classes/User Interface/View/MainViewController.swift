@@ -16,6 +16,7 @@ extension PonyChatUI.UserInterface {
         let eventHandler = MainPresenter()
         
         let messagingView: ASTableView = ASTableView()
+        var messagingRows: Int = 0
         
         deinit {
             messagingView.asyncDelegate = nil
@@ -54,6 +55,7 @@ extension PonyChatUI.UserInterface {
         
         public func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
             if let items = eventHandler.interactor.manager?.items {
+                messagingRows = items.count
                 return items.count
             }
             return 0
@@ -72,6 +74,37 @@ extension PonyChatUI.UserInterface {
                 }
             }
             return ASCellNode()
+        }
+        
+        func tableViewAppendRows(count: Int) {
+            if messagingRows == 0 {
+                messagingView.reloadData()
+                return
+            }
+            messagingView.beginUpdates()
+            for i in 0..<count {
+                let index = NSIndexPath(forRow: messagingRows + i, inSection: 0)
+                messagingView.insertRowsAtIndexPaths([index], withRowAnimation: .None)
+            }
+            if let items = eventHandler.interactor.manager?.items {
+                messagingRows = items.count
+            }
+            messagingView.endUpdatesAnimated(true) { (_) -> Void in
+                self.tableViewAutoScroll()
+            }
+            
+        }
+        
+        func tableViewAutoScroll() {
+            if messagingView.tracking {
+                return
+            }
+            if let firstIndexPath = messagingView.indexPathsForVisibleRows?.first {
+                if messagingRows - firstIndexPath.row > 30 {
+                    return
+                }
+            }
+            messagingView.scrollToRowAtIndexPath(NSIndexPath(forRow: messagingRows - 1, inSection: 0), atScrollPosition: .Bottom, animated: true)
         }
         
     }

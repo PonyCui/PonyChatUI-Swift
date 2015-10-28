@@ -27,7 +27,7 @@ extension PonyChatUI.UserInterface {
         
         func appendMessage(count: Int) {
             if let userInterface = userInterface {
-                
+                userInterface.tableViewAppendRows(count)
             }
         }
         

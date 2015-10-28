@@ -16,15 +16,15 @@ extension PonyChatUI.UserInterface {
         
         weak var delegate: MainPresenter?
         
-        func insertedMessages() {
+        func insertedMessages(count: Int) {
             if let delegate = delegate {
-
+                delegate.insertMessage(count)
             }
         }
         
         func appendedMessage() {
             if let delegate = delegate {
-                
+                delegate.appendMessage(1)
             }
         }
         

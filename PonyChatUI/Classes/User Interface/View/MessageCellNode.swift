@@ -15,7 +15,8 @@ extension PonyChatUI.UserInterface {
         
         let messageItem: PonyChatUI.Entity.Message
         
-        let avatarNode = ASNetworkImageNode()
+        let avatarNode = ASNetworkImageNode(cache: PonyChatUI.ImageCacheManager.sharedManager,
+            downloader: PonyChatUI.ImageDownloadManager.sharedManager)
         let contentNode = ASDisplayNode()
         
         init(messageItem: PonyChatUI.Entity.Message) {

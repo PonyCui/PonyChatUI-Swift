@@ -16,6 +16,9 @@
 		6347F0831BDF6A84006C25F0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6347F07D1BDF6A84006C25F0 /* ViewController.swift */; };
 		6347F0861BDF6A99006C25F0 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6347F0841BDF6A99006C25F0 /* Info.plist */; };
 		6347F0871BDF6A99006C25F0 /* PonyChatUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 6347F0851BDF6A99006C25F0 /* PonyChatUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		63BB6D241BE086C100993891 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB6D231BE086C100993891 /* ImageCacheManager.swift */; };
+		63BB6D261BE0874700993891 /* ImageDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB6D251BE0874700993891 /* ImageDownloadManager.swift */; };
+		63BB6D281BE092C000993891 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63BB6D271BE092C000993891 /* SDWebImage.framework */; };
 		63C4BA0D1BDF6BF40033E9C8 /* Namespace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C4BA0C1BDF6BF40033E9C8 /* Namespace.swift */; };
 		63C4BA0F1BDF6CED0033E9C8 /* AsyncDisplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63C4BA0E1BDF6CED0033E9C8 /* AsyncDisplayKit.framework */; };
 		63C4BA131BDF6D590033E9C8 /* MessageEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C4BA121BDF6D590033E9C8 /* MessageEntities.swift */; };
@@ -62,6 +65,9 @@
 		6347F07D1BDF6A84006C25F0 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		6347F0841BDF6A99006C25F0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6347F0851BDF6A99006C25F0 /* PonyChatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PonyChatUI.h; sourceTree = "<group>"; };
+		63BB6D231BE086C100993891 /* ImageCacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
+		63BB6D251BE0874700993891 /* ImageDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloadManager.swift; sourceTree = "<group>"; };
+		63BB6D271BE092C000993891 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = "Pods/../build/Debug-iphoneos/SDWebImage.framework"; sourceTree = "<group>"; };
 		63C4BA0C1BDF6BF40033E9C8 /* Namespace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Namespace.swift; sourceTree = "<group>"; };
 		63C4BA0E1BDF6CED0033E9C8 /* AsyncDisplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AsyncDisplayKit.framework; path = "Pods/../build/Debug-iphoneos/AsyncDisplayKit.framework"; sourceTree = "<group>"; };
 		63C4BA121BDF6D590033E9C8 /* MessageEntities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageEntities.swift; sourceTree = "<group>"; };
@@ -87,6 +93,7 @@
 			files = (
 				EAEEBED36F8BDCCABB7D555B /* Pods_PonyChatUI.framework in Frameworks */,
 				63C4BA0F1BDF6CED0033E9C8 /* AsyncDisplayKit.framework in Frameworks */,
+				63BB6D281BE092C000993891 /* SDWebImage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,6 +214,8 @@
 			isa = PBXGroup;
 			children = (
 				63C4BA141BDF72890033E9C8 /* MessageManager.swift */,
+				63BB6D231BE086C100993891 /* ImageCacheManager.swift */,
+				63BB6D251BE0874700993891 /* ImageDownloadManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -267,6 +276,7 @@
 		E3E8082F15B7E7764E6B4057 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				63BB6D271BE092C000993891 /* SDWebImage.framework */,
 				63C4BA0E1BDF6CED0033E9C8 /* AsyncDisplayKit.framework */,
 				66CADB9FF5E235D4F41F1424 /* Pods_PonyChatUI.framework */,
 				0DE04F202845E9FF6A8AA4F3 /* Pods_PonyChatUIDemo.framework */,
@@ -477,8 +487,10 @@
 				63C4BA2A1BDF8BB10033E9C8 /* MessageCellNode.swift in Sources */,
 				63C4BA131BDF6D590033E9C8 /* MessageEntities.swift in Sources */,
 				63C4BA2E1BDF8DC90033E9C8 /* Configable.swift in Sources */,
+				63BB6D261BE0874700993891 /* ImageDownloadManager.swift in Sources */,
 				63C4BA281BDF888E0033E9C8 /* MainPresenter.swift in Sources */,
 				63C4BA1F1BDF778A0033E9C8 /* MainViewController.swift in Sources */,
+				63BB6D241BE086C100993891 /* ImageCacheManager.swift in Sources */,
 				63C4BA1B1BDF74280033E9C8 /* Core.swift in Sources */,
 				63C4BA261BDF88850033E9C8 /* MainInteractor.swift in Sources */,
 				63C4BA0D1BDF6BF40033E9C8 /* Namespace.swift in Sources */,

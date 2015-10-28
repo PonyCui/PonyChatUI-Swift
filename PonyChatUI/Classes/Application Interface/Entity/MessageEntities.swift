@@ -12,10 +12,10 @@ extension PonyChatUI.Entity {
     
     public class Message {
         
-        struct Sender {
-            var isOwnSender: Bool = false
-            var senderID: String = ""
-            var senderNickname: String = "" {
+        public struct Sender {
+            public var isOwnSender: Bool = false
+            public var senderID: String = ""
+            public var senderNickname: String = "" {
                 didSet {
                     if let userInterface = userInterface {
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -24,7 +24,7 @@ extension PonyChatUI.Entity {
                     }
                 }
             }
-            var senderAvatarURLString: String = "" {
+            public var senderAvatarURLString: String = "" {
                 didSet {
                     if let userInterface = userInterface {
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -34,22 +34,26 @@ extension PonyChatUI.Entity {
                 }
             }
             weak var userInterface: PonyChatUI.UserInterface.MessageCellNode?
+            
+            public init() {
+                
+            }
         }
         
-        enum SendingStatus {
+        public enum SendingStatus {
             case None;
             case Sending;
             case Failure;
         }
         
-        let messageID: String
-        let messageDate: NSDate
-        var messageOreder: Double = 0.0
-        var messageSender: Sender? = nil
-        var messageSendingStatus: Int = 0
-        var messageAttributes = [String: Any]()
+        public let messageID: String
+        public let messageDate: NSDate
+        public var messageOreder: Double = 0.0
+        public var messageSender: Sender? = nil
+        public var messageSendingStatus: Int = 0
+        public var messageAttributes = [String: Any]()
         
-        init(mID: String, mDate: NSDate) {
+        public init(mID: String, mDate: NSDate) {
             messageID = mID
             messageDate = mDate
         }
@@ -58,9 +62,9 @@ extension PonyChatUI.Entity {
     
     public class TextMessage: Message {
         
-        let text: String
+        public let text: String
         
-        init(mID: String, mDate: NSDate, text: String) {
+        public init(mID: String, mDate: NSDate, text: String) {
             self.text = text
             super.init(mID: mID, mDate: mDate)
         }
@@ -71,10 +75,10 @@ extension PonyChatUI.Entity {
     
     public class VoiceMessage: Message {
         
-        let voiceURLString: String
-        let voiceDuration: String
+        public let voiceURLString: String
+        public let voiceDuration: String
         
-        init(mID: String, mDate: NSDate, voiceURLString: String, voiceDuration: String) {
+        public init(mID: String, mDate: NSDate, voiceURLString: String, voiceDuration: String) {
             self.voiceURLString = voiceURLString
             self.voiceDuration = voiceDuration
             super.init(mID: mID, mDate: mDate)
@@ -84,12 +88,12 @@ extension PonyChatUI.Entity {
     
     public class ImageMessage: Message {
         
-        let imageURLString: String
-        let thumbURLString: String?
-        let imageSize: CGSize
-        let isGIF: Bool
+        public let imageURLString: String
+        public let thumbURLString: String?
+        public let imageSize: CGSize
+        public let isGIF: Bool
         
-        init(mID: String, mDate: NSDate, imageURLString: String, thumbURLString: String?, imageSize: CGSize, isGIF: Bool = false) {
+        public init(mID: String, mDate: NSDate, imageURLString: String, thumbURLString: String?, imageSize: CGSize, isGIF: Bool = false) {
             self.imageURLString = imageURLString
             self.thumbURLString = thumbURLString
             self.imageSize = imageSize
