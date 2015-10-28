@@ -14,13 +14,15 @@ extension PonyChatUI.UserInterface {
     public class MessageCellNode: ASCellNode {
         
         let messageItem: PonyChatUI.Entity.Message
+        let messagingConfigure: Configure
         
         let avatarNode = ASNetworkImageNode(cache: PonyChatUI.ImageCacheManager.sharedManager,
             downloader: PonyChatUI.ImageDownloadManager.sharedManager)
         let contentNode = ASDisplayNode()
         
-        init(messageItem: PonyChatUI.Entity.Message) {
+        init(messageItem: PonyChatUI.Entity.Message, messagingConfigure: Configure) {
             self.messageItem = messageItem
+            self.messagingConfigure = messagingConfigure
             super.init()
             configureNodes()
             configureDatas()
@@ -44,19 +46,19 @@ extension PonyChatUI.UserInterface {
         }
         
         public override func calculateSizeThatFits(constrainedSize: CGSize) -> CGSize {
-            contentNode.frame = CGRect(x: 0, y: 0, width: constrainedSize.width, height: Define.sharedDefine.kAvatarSize.height + Define.sharedDefine.kAvatarEdge.bottom)
-            return CGSize(width: constrainedSize.width, height: Define.sharedDefine.kAvatarSize.height + Define.sharedDefine.kAvatarEdge.bottom + Define.sharedDefine.kCellGaps)
+            contentNode.frame = CGRect(x: 0, y: 0, width: constrainedSize.width, height: messagingConfigure.avatarSize.height + messagingConfigure.avatarEdge.bottom)
+            return CGSize(width: constrainedSize.width, height: messagingConfigure.avatarSize.height + messagingConfigure.avatarEdge.bottom + messagingConfigure.cellGaps)
         }
         
         public override func layout() {
             if let sender = messageItem.messageSender {
                 if sender.isOwnSender {
-                    avatarNode.frame = CGRect(x: calculatedSize.width - Define.sharedDefine.kAvatarEdge.right - Define.sharedDefine.kAvatarSize.width, y: Define.sharedDefine.kAvatarEdge.top, width: Define.sharedDefine.kAvatarSize.width, height: Define.sharedDefine.kAvatarSize.height)
+                    avatarNode.frame = CGRect(x: calculatedSize.width - messagingConfigure.avatarEdge.right - messagingConfigure.avatarSize.width, y: messagingConfigure.avatarEdge.top, width: messagingConfigure.avatarSize.width, height: messagingConfigure.avatarSize.height)
                 }
                 else {
-                    avatarNode.frame = CGRect(x: Define.sharedDefine.kAvatarEdge.left, y: Define.sharedDefine.kAvatarEdge.top, width: Define.sharedDefine.kAvatarSize.width, height: Define.sharedDefine.kAvatarSize.height)
+                    avatarNode.frame = CGRect(x: messagingConfigure.avatarEdge.left, y: messagingConfigure.avatarEdge.top, width: messagingConfigure.avatarSize.width, height: messagingConfigure.avatarSize.height)
                 }
-                avatarNode.layer.cornerRadius = Define.sharedDefine.kAvatarCornerRadius
+                avatarNode.layer.cornerRadius = messagingConfigure.avatarCornerRadius
                 avatarNode.layer.masksToBounds = true
             }
             else {

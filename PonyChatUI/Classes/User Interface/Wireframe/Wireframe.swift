@@ -14,7 +14,8 @@ extension PonyChatUI.UserInterface {
         
         let preloadWindow = UIWindow()
         
-        public func main(messageManager: PonyChatUI.MessageManager) -> (PonyChatUI.UserInterface.MainViewController, UIView) {
+        public func main(messageManager: PonyChatUI.MessageManager, messagingConfigure: Configure? = nil) ->
+            (PonyChatUI.UserInterface.MainViewController, UIView) {
             let mainViewController = MainViewController()
             mainViewController.eventHandler.interactor.manager = messageManager
             messageManager.delegate = mainViewController.eventHandler.interactor
@@ -23,13 +24,14 @@ extension PonyChatUI.UserInterface {
         
         public func preload(
             messageManager: PonyChatUI.MessageManager,
+            messagingConfigure: Configure? = nil,
             size: CGSize,
             completion:(PonyChatUI.UserInterface.MainViewController, UIView) -> Void)
             -> Void {
                 preloadWindow.windowLevel = UIWindowLevelNormal - 1
                 preloadWindow.hidden = false
                 preloadWindow.frame = CGRect(x: 0, y: -9999.0, width: size.width, height: size.height)
-                let _main = main(messageManager)
+                let _main = main(messageManager, messagingConfigure: messagingConfigure)
                 preloadWindow.rootViewController = _main.0
                 
                 _main.0.messagingView.reloadDataWithCompletion { () -> Void in

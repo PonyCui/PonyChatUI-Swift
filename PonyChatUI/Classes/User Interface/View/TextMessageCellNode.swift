@@ -39,18 +39,18 @@ extension PonyChatUI.UserInterface {
         func configureTextNode() {
             if let item = typedMessageItem {
                 let attributedString = NSAttributedString(string: item.text,
-                    attributes: Define.sharedDefine.kTextStyle)
+                    attributes: messagingConfigure.textStyle)
                 textNode.attributedString = attributedString
             }
         }
         
         override func calculateSizeThatFits(constrainedSize: CGSize) -> CGSize {
             let superSize = super.calculateSizeThatFits(constrainedSize)
-            let textBoxWidth = constrainedSize.width - Define.sharedDefine.kAvatarSize.width - Define.sharedDefine.kAvatarEdge.left - Define.sharedDefine.kAvatarEdge.right - Define.sharedDefine.kTextEdge.left - Define.sharedDefine.kTextEdge.right - 60.0
+            let textBoxWidth = constrainedSize.width - messagingConfigure.avatarSize.width - messagingConfigure.avatarEdge.left - messagingConfigure.avatarEdge.right - messagingConfigure.textEdge.left - messagingConfigure.textEdge.right - 60.0
             let textSize = self.textNode.measure(CGSize(width: textBoxWidth, height: constrainedSize.height))
-            let requiredHeight = max(superSize.height, textSize.height + Define.sharedDefine.kTextEdge.top + Define.sharedDefine.kTextEdge.bottom)
-            contentNode.frame = CGRectMake(0, 0, constrainedSize.width, requiredHeight + Define.sharedDefine.kCellGaps)
-            return CGSize(width: constrainedSize.width, height: requiredHeight + Define.sharedDefine.kCellGaps)
+            let requiredHeight = max(superSize.height, textSize.height + messagingConfigure.textEdge.top + messagingConfigure.textEdge.bottom)
+            contentNode.frame = CGRectMake(0, 0, constrainedSize.width, requiredHeight + messagingConfigure.cellGaps)
+            return CGSize(width: constrainedSize.width, height: requiredHeight + messagingConfigure.cellGaps)
         }
         
         override func layout() {
@@ -59,17 +59,17 @@ extension PonyChatUI.UserInterface {
                 var textRect = CGRect()
                 textRect.size = self.textNode.calculatedSize
                 if sender.isOwnSender {
-                    textRect.origin = CGPoint(x: avatarNode.frame.origin.x - Define.sharedDefine.kAvatarEdge.left - textRect.size.width - Define.sharedDefine.kTextEdge.right, y: Define.sharedDefine.kTextEdge.top + 3.0)
+                    textRect.origin = CGPoint(x: avatarNode.frame.origin.x - messagingConfigure.avatarEdge.left - textRect.size.width - messagingConfigure.textEdge.right, y: messagingConfigure.textEdge.top + 3.0)
                 }
                 else {
-                    textRect.origin = CGPoint(x: avatarNode.frame.origin.x + avatarNode.frame.size.width + Define.sharedDefine.kAvatarEdge.right + Define.sharedDefine.kTextEdge.left, y: Define.sharedDefine.kTextEdge.top + 3.0)
+                    textRect.origin = CGPoint(x: avatarNode.frame.origin.x + avatarNode.frame.size.width + messagingConfigure.avatarEdge.right + messagingConfigure.textEdge.left, y: messagingConfigure.textEdge.top + 3.0)
                 }
                 textNode.frame = textRect
-                backgroundNode.image = sender.isOwnSender ? Define.sharedDefine.kTextBackgroundSender : Define.sharedDefine.kTextBackgroundReceiver
-                backgroundNode.frame = CGRect(x: textRect.origin.x - Define.sharedDefine.kTextEdge.left,
-                    y: textRect.origin.y - Define.sharedDefine.kTextEdge.top,
-                    width: textRect.size.width + Define.sharedDefine.kTextEdge.left + Define.sharedDefine.kTextEdge.right,
-                    height: textRect.size.height + Define.sharedDefine.kTextEdge.top + Define.sharedDefine.kTextEdge.bottom * 2)
+                backgroundNode.image = sender.isOwnSender ? messagingConfigure.textBackgroundSender : messagingConfigure.textBackgroundReceiver
+                backgroundNode.frame = CGRect(x: textRect.origin.x - messagingConfigure.textEdge.left,
+                    y: textRect.origin.y - messagingConfigure.textEdge.top,
+                    width: textRect.size.width + messagingConfigure.textEdge.left + messagingConfigure.textEdge.right,
+                    height: textRect.size.height + messagingConfigure.textEdge.top + messagingConfigure.textEdge.bottom * 2)
             }
         }
         

@@ -15,6 +15,8 @@ extension PonyChatUI.UserInterface {
         
         let eventHandler = MainPresenter()
         
+        var messagingConfigure: Configure = Configure.sharedConfigure
+        
         let messagingView: ASTableView = ASTableView()
         var messagingRows: Int = 0
         
@@ -70,10 +72,12 @@ extension PonyChatUI.UserInterface {
                 if indexPath.row < items.count {
                     let messageItem = items[indexPath.row]
                     if let messageItem = messageItem as? PonyChatUI.Entity.TextMessage {
-                        return TextMessageCellNode(messageItem: messageItem)
+                        return TextMessageCellNode(messageItem: messageItem,
+                            messagingConfigure: self.messagingConfigure)
                     }
                     else {
-                        return MessageCellNode(messageItem: messageItem)
+                        return MessageCellNode(messageItem: messageItem,
+                            messagingConfigure: self.messagingConfigure)
                     }
                 }
             }
