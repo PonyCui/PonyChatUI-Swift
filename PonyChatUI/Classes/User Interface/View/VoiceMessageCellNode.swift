@@ -88,7 +88,9 @@ extension PonyChatUI.UserInterface {
         
         override func calculateSizeThatFits(constrainedSize: CGSize) -> CGSize {
             durationNode.measure(constrainedSize)
-            return super.calculateSizeThatFits(constrainedSize)
+            var superSize = super.calculateSizeThatFits(constrainedSize)
+            superSize.height += nicknameHeight
+            return superSize
         }
         
         override func layout() {
@@ -97,17 +99,17 @@ extension PonyChatUI.UserInterface {
                 let backgroundWidth = CGFloat(max(88.0, min(260.0, messageItem.voiceDuration / 60.0 * 260.0)))
                 if let sender = messageItem.messageSender {
                     if sender.isOwnSender {
-                        backgroundNode.frame = CGRect(x: avatarNode.frame.origin.x - messagingConfigure.avatarEdge.left - backgroundWidth, y: 2.0, width: backgroundWidth, height: 54.0)
-                        voiceNode.frame = CGRect(x: backgroundNode.frame.origin.x + backgroundNode.frame.size.width - 62.0, y: 2.0, width: 44.0, height: 44.0)
+                        backgroundNode.frame = CGRect(x: avatarNode.frame.origin.x - messagingConfigure.avatarEdge.left - backgroundWidth, y: 2.0 + nicknameHeight, width: backgroundWidth, height: 54.0)
+                        voiceNode.frame = CGRect(x: backgroundNode.frame.origin.x + backgroundNode.frame.size.width - 62.0, y: backgroundNode.frame.origin.y, width: 44.0, height: 44.0)
                         durationNode.frame = CGRect(x: backgroundNode.frame.origin.x - 4.0 - durationNode.calculatedSize.width, y: backgroundNode.frame.origin.y + backgroundNode.frame.size.height - durationNode.calculatedSize.height - 14.0, width: durationNode.calculatedSize.width, height: durationNode.calculatedSize.height)
-                        badgeNode.frame = CGRect(x: backgroundNode.frame.origin.x - 4.0 - durationNode.calculatedSize.width, y: 6.0, width: 8.0, height: 8.0)
+                        badgeNode.frame = CGRect(x: backgroundNode.frame.origin.x - 4.0 - durationNode.calculatedSize.width, y: backgroundNode.frame.origin.y + 6.0, width: 8.0, height: 8.0)
                         badgeNode.layer.cornerRadius = 4.0
                     }
                     else {
-                        backgroundNode.frame = CGRect(x: avatarNode.frame.origin.x + avatarNode.frame.size.width + messagingConfigure.avatarEdge.right, y: 2.0, width: backgroundWidth, height: 54.0)
-                        voiceNode.frame = CGRect(x: backgroundNode.frame.origin.x + 20.0, y: 2.0, width: 44.0, height: 44.0)
+                        backgroundNode.frame = CGRect(x: avatarNode.frame.origin.x + avatarNode.frame.size.width + messagingConfigure.avatarEdge.right, y: 2.0 + nicknameHeight, width: backgroundWidth, height: 54.0)
+                        voiceNode.frame = CGRect(x: backgroundNode.frame.origin.x + 20.0, y: backgroundNode.frame.origin.y, width: 44.0, height: 44.0)
                         durationNode.frame = CGRect(x: backgroundNode.frame.origin.x + backgroundNode.frame.size.width + 4.0, y: backgroundNode.frame.origin.y + backgroundNode.frame.size.height - durationNode.calculatedSize.height - 14.0, width: durationNode.calculatedSize.width, height: durationNode.calculatedSize.height)
-                        badgeNode.frame = CGRect(x: backgroundNode.frame.origin.x + backgroundNode.frame.size.width + 4.0, y: 6.0, width: 8.0, height: 8.0)
+                        badgeNode.frame = CGRect(x: backgroundNode.frame.origin.x + backgroundNode.frame.size.width + 4.0, y: backgroundNode.frame.origin.y + 6.0, width: 8.0, height: 8.0)
                         badgeNode.layer.cornerRadius = 4.0
                     }
                 }
