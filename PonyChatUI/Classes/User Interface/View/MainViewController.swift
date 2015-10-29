@@ -15,6 +15,16 @@ extension PonyChatUI.UserInterface {
         
         let eventHandler = MainPresenter()
         
+        public weak var coreDelegate: PonyChatUIDelegate? {
+            didSet {
+                for node in messagingView.visibleNodes() {
+                    if let node = node as? MessageCellNode {
+                        node.coreDelegate = self.coreDelegate
+                    }
+                }
+            }
+        }
+        
         var messagingConfigure: Configure = Configure.sharedConfigure
         
         let messagingView: ASTableView = ASTableView()
@@ -87,6 +97,7 @@ extension PonyChatUI.UserInterface {
         public func tableView(tableView: ASTableView!, willDisplayNodeForRowAtIndexPath indexPath: NSIndexPath!) {
             for node in tableView.visibleNodes() {
                 if let node = node as? MessageCellNode {
+                    node.coreDelegate = self.coreDelegate
                     node.configureResumeStates()
                 }
             }

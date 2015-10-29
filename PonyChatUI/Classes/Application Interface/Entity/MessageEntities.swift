@@ -34,10 +34,7 @@ extension PonyChatUI.Entity {
                 }
             }
             weak var userInterface: PonyChatUI.UserInterface.MessageCellNode?
-            
-            public init() {
-                
-            }
+            public init() {}
         }
         
         public enum SendingStatus {

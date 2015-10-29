@@ -8,6 +8,12 @@
 
 import Foundation
 
+public protocol PonyChatUIDelegate: NSObjectProtocol {
+    
+    func chatUIRequestOpenURL(URL: NSURL) -> Void;
+    
+}
+
 @objc public class PonyChatUICore: NSObject {
     
     private static let sharedInstacne = PonyChatUICore()

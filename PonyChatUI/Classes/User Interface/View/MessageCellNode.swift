@@ -13,6 +13,8 @@ extension PonyChatUI.UserInterface {
     
     public class MessageCellNode: ASCellNode {
         
+        weak var coreDelegate: PonyChatUIDelegate?
+        
         let messageItem: PonyChatUI.Entity.Message
         let messagingConfigure: Configure
         
@@ -35,6 +37,7 @@ extension PonyChatUI.UserInterface {
         func configureNodes() {
             selectionStyle = .None
             addSubnode(contentNode)
+            contentNode.userInteractionEnabled = true
             contentNode.addSubnode(avatarNode)
             self.messageItem.userInterface = self
             if self.messageItem.messageSender != nil {

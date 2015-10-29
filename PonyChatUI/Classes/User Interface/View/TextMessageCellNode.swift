@@ -11,7 +11,7 @@ import AsyncDisplayKit
 
 extension PonyChatUI.UserInterface {
     
-    class TextMessageCellNode: PonyChatUI.UserInterface.MessageCellNode {
+    class TextMessageCellNode: PonyChatUI.UserInterface.MessageCellNode, ASTextNodeDelegate {
         
         let textNode = ASTextNode()
         let backgroundNode = ASImageNode()
@@ -40,8 +40,46 @@ extension PonyChatUI.UserInterface {
             if let item = typedMessageItem {
                 let attributedString = NSAttributedString(string: item.text,
                     attributes: messagingConfigure.textStyle)
-                textNode.attributedString = attributedString
+                if linkText(item.text) {
+                    textNode.delegate = self
+                    textNode.userInteractionEnabled = true
+                    textNode.linkAttributeNames = ["PCULinkAttributeName"]
+                    textNode.attributedString = linkedAttributedString(attributedString)
+                }
+                else {
+                    textNode.attributedString = attributedString
+                }
             }
+        }
+        
+        func linkText(text: String) -> Bool {
+            do {
+                let detector = try NSDataDetector(types: NSTextCheckingType.Link.rawValue)
+                return detector.numberOfMatchesInString(text, options: NSMatchingOptions.ReportCompletion, range: NSMakeRange(0, text.characters.count)) > 0
+            }
+            catch _ {
+                return false
+            }
+        }
+        
+        func linkedAttributedString(text: NSAttributedString) -> NSAttributedString {
+            var string = text.string
+            string = string.stringByReplacingOccurrencesOfString("[^\\x00-\\xff]", withString: " ", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
+            let mutableString = text.mutableCopy()
+            do {
+                let detector = try NSDataDetector(types: NSTextCheckingType.Link.rawValue)
+                let matches = detector.matchesInString(string, options: NSMatchingOptions.ReportCompletion, range: NSMakeRange(0, string.characters.count))
+                for result in matches {
+                    if result.resultType == NSTextCheckingType.Link, let URL = result.URL {
+                        mutableString.addAttribute("PCULinkAttributeName", value: URL, range: result.range)
+                        mutableString.addAttribute(NSForegroundColorAttributeName,
+                            value: UIColor(red: 0, green: 95.0/255.0, blue: 1.0, alpha: 1.0),
+                            range: result.range)
+                    }
+                }
+            }
+            catch _ {}
+            return mutableString.copy() as! NSAttributedString
         }
         
         override func calculateSizeThatFits(constrainedSize: CGSize) -> CGSize {
@@ -72,6 +110,20 @@ extension PonyChatUI.UserInterface {
                     height: textRect.size.height + messagingConfigure.textEdge.top + messagingConfigure.textEdge.bottom * 2)
                 mainContentRect = backgroundNode.frame
                 layoutSendingNodes()
+            }
+        }
+        
+        func textNode(textNode: ASTextNode!, shouldHighlightLinkAttribute attribute: String!, value: AnyObject!, atPoint point: CGPoint) -> Bool {
+            return true
+        }
+        
+        func textNode(textNode: ASTextNode!, shouldLongPressLinkAttribute attribute: String!, value: AnyObject!, atPoint point: CGPoint) -> Bool {
+            return true
+        }
+        
+        func textNode(textNode: ASTextNode!, tappedLinkAttribute attribute: String!, value: AnyObject!, atPoint point: CGPoint, textRange: NSRange) {
+            if let coreDelegate = coreDelegate, let URL = value as? NSURL {
+                coreDelegate.chatUIRequestOpenURL(URL)
             }
         }
         

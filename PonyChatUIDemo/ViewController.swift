@@ -9,7 +9,7 @@
 import UIKit
 import PonyChatUI
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, PonyChatUIDelegate {
     
     var preloaded = false
 
@@ -22,6 +22,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         if preloaded {
             if let chatViewController = chatViewController, let chatView = chatView {
+                chatViewController.coreDelegate = self
                 chatViewController.removeFromParentViewController()
                 chatView.removeFromSuperview()
                 addChildViewController(chatViewController)
@@ -31,6 +32,7 @@ class ViewController: UIViewController {
         else {
             loadHistory()
             let chatMain = PonyChatUICore.sharedCore.wireframe.main(messageManager)
+            chatMain.0.coreDelegate = self
             chatViewController = chatMain.0
             chatView = chatMain.1
             addChildViewController(chatMain.0)
@@ -46,7 +48,7 @@ class ViewController: UIViewController {
             aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
             aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
             aSender.senderNickname = "Pony"
-            let message = PonyChatUI.Entity.TextMessage(mID: "test", mDate: NSDate(), text: NSDate().description)
+            let message = PonyChatUI.Entity.TextMessage(mID: "test", mDate: NSDate(), text: "\(NSDate().description) http://www.baidu.com 你好")
             message.messageSender = aSender
             items.append(message)
         }
@@ -85,6 +87,12 @@ class ViewController: UIViewController {
                 self.navigationController?.pushViewController(nextViewController, animated: true)
             })
         }
+    }
+    
+    
+    
+    func chatUIRequestOpenURL(URL: NSURL) {
+        UIApplication.sharedApplication().openURL(URL)
     }
     
 
