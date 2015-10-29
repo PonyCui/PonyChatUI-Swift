@@ -20,6 +20,7 @@ extension PonyChatUI.UserInterface {
             downloader: PonyChatUI.ImageDownloadManager.sharedManager)
         let nicknameNode = ASTextNode()
         var sendingIndicatorNode: ASDisplayNode? = nil
+        var sendingErrorNode: ASImageNode? = nil
         let contentNode = ASDisplayNode()
         
         init(messageItem: PonyChatUI.Entity.Message, messagingConfigure: Configure) {
@@ -74,14 +75,26 @@ extension PonyChatUI.UserInterface {
                     return indicatorView
                 })
                 contentNode.addSubnode(self.sendingIndicatorNode)
+                if let errorNode = self.sendingErrorNode {
+                    errorNode.removeFromSupernode()
+                }
                 layoutSendingNodes()
             }
             else if messageItem.messageSendingStatus == .Failure {
-                
+                self.sendingErrorNode = ASImageNode()
+                self.sendingErrorNode?.image = UIImage(named: "SenderNodeError", inBundle: NSBundle(forClass: PonyChatUICore.self), compatibleWithTraitCollection: nil)
+                contentNode.addSubnode(self.sendingErrorNode)
+                if let indicatorNode = self.sendingIndicatorNode {
+                    indicatorNode.removeFromSupernode()
+                }
+                layoutSendingNodes()
             }
             else {
                 if let indicatorNode = self.sendingIndicatorNode {
                     indicatorNode.removeFromSupernode()
+                }
+                if let errorNode = self.sendingErrorNode {
+                    errorNode.removeFromSupernode()
                 }
             }
         }
@@ -89,6 +102,9 @@ extension PonyChatUI.UserInterface {
         func layoutSendingNodes() {
             if let indicatorNode = self.sendingIndicatorNode {
                 indicatorNode.frame = CGRect(x: mainContentRect.origin.x - 44.0, y: mainContentRect.size.height / 2.0 + mainContentRect.origin.y - 22.0 - 4.0, width: 44.0, height: 44.0)
+            }
+            if let errorNode = self.sendingErrorNode {
+                errorNode.frame = CGRect(x: mainContentRect.origin.x - 44.0, y: mainContentRect.size.height / 2.0 + mainContentRect.origin.y - 22.0 - 4.0, width: 44.0, height: 44.0)
             }
         }
         

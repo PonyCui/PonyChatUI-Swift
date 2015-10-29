@@ -26,8 +26,8 @@ extension PonyChatUI.UserInterface {
         
         public var textStyle = [String: AnyObject]()
         public var textEdge = UIEdgeInsets(top: 12, left: 18, bottom: 10, right: 18)
-        public var textBackgroundSender = UIImage(named: "SenderTextNodeBkg", inBundle: NSBundle(identifier: "PonyChatUI"), compatibleWithTraitCollection: nil)!.resizableImageWithCapInsets(UIEdgeInsets(top: 28, left: 20, bottom: 15, right: 20), resizingMode: .Stretch)
-        public var textBackgroundReceiver = UIImage(named: "ReceiverTextNodeBkg", inBundle: NSBundle(identifier: "PonyChatUI"), compatibleWithTraitCollection: nil)!.resizableImageWithCapInsets(UIEdgeInsets(top: 28, left: 20, bottom: 15, right: 20), resizingMode: .Stretch)
+        public var textBackgroundSender = UIImage(named: "SenderTextNodeBkg", inBundle: NSBundle(forClass: PonyChatUICore.self), compatibleWithTraitCollection: nil)!.resizableImageWithCapInsets(UIEdgeInsets(top: 28, left: 20, bottom: 15, right: 20), resizingMode: .Stretch)
+        public var textBackgroundReceiver = UIImage(named: "ReceiverTextNodeBkg", inBundle: NSBundle(forClass: PonyChatUICore.self), compatibleWithTraitCollection: nil)!.resizableImageWithCapInsets(UIEdgeInsets(top: 28, left: 20, bottom: 15, right: 20), resizingMode: .Stretch)
         
         init() {
             textStyle = defaultTextStyle()
