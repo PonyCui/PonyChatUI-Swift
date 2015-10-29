@@ -43,6 +43,10 @@ class ViewController: UIViewController, PonyChatUIDelegate {
     
     func loadHistory() {
         var items: [PonyChatUI.Entity.Message] = []
+        
+        let systemMessage = PonyChatUI.Entity.SystemMessage(mID: "test", mDate: NSDate(), text: "这是一条系统消息")
+        items.append(systemMessage)
+        
         for _ in 0...100 {
             var aSender = PonyChatUI.Entity.Message.Sender()
             aSender.isOwnSender = arc4random() % 2 == 0 ? true : false

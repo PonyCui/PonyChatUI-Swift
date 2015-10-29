@@ -81,7 +81,11 @@ extension PonyChatUI.UserInterface {
             if let items = eventHandler.interactor.manager?.items {
                 if indexPath.row < items.count {
                     let messageItem = items[indexPath.row]
-                    if let messageItem = messageItem as? PonyChatUI.Entity.TextMessage {
+                    if let messageItem = messageItem as? PonyChatUI.Entity.SystemMessage {
+                        return SystemMessageCellNode(messageItem: messageItem,
+                            messagingConfigure: self.messagingConfigure)
+                    }
+                    else if let messageItem = messageItem as? PonyChatUI.Entity.TextMessage {
                         return TextMessageCellNode(messageItem: messageItem,
                             messagingConfigure: self.messagingConfigure)
                     }

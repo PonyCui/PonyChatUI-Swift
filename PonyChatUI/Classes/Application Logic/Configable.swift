@@ -29,9 +29,12 @@ extension PonyChatUI.UserInterface {
         public var textBackgroundSender = UIImage(named: "SenderTextNodeBkg", inBundle: NSBundle(forClass: PonyChatUICore.self), compatibleWithTraitCollection: nil)!.resizableImageWithCapInsets(UIEdgeInsets(top: 28, left: 20, bottom: 15, right: 20), resizingMode: .Stretch)
         public var textBackgroundReceiver = UIImage(named: "ReceiverTextNodeBkg", inBundle: NSBundle(forClass: PonyChatUICore.self), compatibleWithTraitCollection: nil)!.resizableImageWithCapInsets(UIEdgeInsets(top: 28, left: 20, bottom: 15, right: 20), resizingMode: .Stretch)
         
+        public var systemTextStyle = [String: AnyObject]()
+        
         init() {
             textStyle = defaultTextStyle()
             nicknameStyle = defaultNicknameStyle()
+            systemTextStyle = defaultSystemTextStyle()
         }
         
         func defaultTextStyle() -> [String: AnyObject] {
@@ -46,6 +49,12 @@ extension PonyChatUI.UserInterface {
         func defaultNicknameStyle() -> [String: AnyObject] {
             let font = UIFont.systemFontOfSize(13)
             let color = UIColor.grayColor()
+            return [NSFontAttributeName: font, NSForegroundColorAttributeName: color]
+        }
+        
+        func defaultSystemTextStyle() -> [String: AnyObject] {
+            let font = UIFont.systemFontOfSize(14)
+            let color = UIColor.whiteColor()
             return [NSFontAttributeName: font, NSForegroundColorAttributeName: color]
         }
         
