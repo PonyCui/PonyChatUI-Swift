@@ -19,7 +19,6 @@ extension PonyChatUI.UserInterface {
         let avatarNode = ASNetworkImageNode(cache: PonyChatUI.ImageCacheManager.sharedManager,
             downloader: PonyChatUI.ImageDownloadManager.sharedManager)
         let nicknameNode = ASTextNode()
-        var sendingIndicatorView: UIActivityIndicatorView? = nil
         var sendingIndicatorNode: ASDisplayNode? = nil
         let contentNode = ASDisplayNode()
         
@@ -60,13 +59,19 @@ extension PonyChatUI.UserInterface {
             }
         }
         
+        func configureResumeStates() {
+            if let sendingIndicatorView = self.sendingIndicatorNode?.view as? UIActivityIndicatorView {
+                sendingIndicatorView.startAnimating()
+            }
+        }
+        
         func configureSendingNodes() {
             if messageItem.messageSendingStatus == .Sending {
-                self.sendingIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
                 self.sendingIndicatorNode = ASDisplayNode(viewBlock: { () -> UIView! in
-                    self.sendingIndicatorView?.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-                    self.sendingIndicatorView?.startAnimating()
-                    return self.sendingIndicatorView
+                    let indicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+                    indicatorView.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+                    indicatorView.startAnimating()
+                    return indicatorView
                 })
                 contentNode.addSubnode(self.sendingIndicatorNode)
                 layoutSendingNodes()

@@ -84,6 +84,14 @@ extension PonyChatUI.UserInterface {
             return ASCellNode()
         }
         
+        public func tableView(tableView: ASTableView!, willDisplayNodeForRowAtIndexPath indexPath: NSIndexPath!) {
+            for node in tableView.visibleNodes() {
+                if let node = node as? MessageCellNode {
+                    node.configureResumeStates()
+                }
+            }
+        }
+        
         func tableViewAppendRows(count: Int) {
             if messagingRows == 0 {
                 messagingView.reloadDataWithCompletion({ () -> Void in
