@@ -91,9 +91,26 @@ extension PonyChatUI.Entity {
     public class VoiceMessage: Message {
         
         public let voiceURLString: String
-        public let voiceDuration: String
+        public let voiceDuration: Double
         
-        public init(mID: String, mDate: NSDate, voiceURLString: String, voiceDuration: String) {
+        // If voice is playing, the voice user interface will start an animation
+        public var voicePlaying: Bool = false {
+            didSet {
+                if let userInterface = userInterface as? PonyChatUI.UserInterface.VoiceMessageCellNode {
+                    userInterface.isPlaying = voicePlaying
+                    voicePlaying ? userInterface.letStatePlay() : userInterface.letStatePause()
+                }
+            }
+        }
+        
+        // If voice is played, the badge will dismiss, or it will show in.
+        public var voicePlayed: Bool = true {
+            didSet {
+                
+            }
+        }
+        
+        public init(mID: String, mDate: NSDate, voiceURLString: String, voiceDuration: Double) {
             self.voiceURLString = voiceURLString
             self.voiceDuration = voiceDuration
             super.init(mID: mID, mDate: mDate)

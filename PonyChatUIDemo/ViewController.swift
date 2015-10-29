@@ -47,12 +47,16 @@ class ViewController: UIViewController, PonyChatUIDelegate {
         let systemMessage = PonyChatUI.Entity.SystemMessage(mID: "test", mDate: NSDate(), text: "这是一条系统消息")
         items.append(systemMessage)
         
-        for _ in 0...100 {
+        for i in 0...100 {
             var aSender = PonyChatUI.Entity.Message.Sender()
             aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
             aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
             aSender.senderNickname = "Pony"
-            let message = PonyChatUI.Entity.TextMessage(mID: "test", mDate: NSDate(), text: "\(NSDate().description) http://www.baidu.com 你好")
+//            let message = PonyChatUI.Entity.TextMessage(mID: "test", mDate: NSDate(), text: "\(NSDate().description) http://www.baidu.com 你好")
+            let message = PonyChatUI.Entity.VoiceMessage(mID: "\(i)", mDate: NSDate(), voiceURLString: "xxxxx", voiceDuration: Double(arc4random() % 100))
+            if i > 95 {
+                message.voicePlayed = false
+            }
             message.messageSender = aSender
             items.append(message)
         }
@@ -97,6 +101,22 @@ class ViewController: UIViewController, PonyChatUIDelegate {
     
     func chatUIRequestOpenURL(URL: NSURL) {
         UIApplication.sharedApplication().openURL(URL)
+    }
+    
+    func chatUIRequestPlayVoiceMessages(messageItems: [PonyChatUI.Entity.VoiceMessage]) {
+        
+        var i: UInt64 = 0
+        for item in messageItems {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(3 * i * NSEC_PER_SEC)), dispatch_get_main_queue()) { () -> Void in
+                item.voicePlaying = true
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(3 * i + 3 * NSEC_PER_SEC)), dispatch_get_main_queue()) { () -> Void in
+                    item.voicePlaying = false
+                }
+            }
+            i++
+        }
+        
+        
     }
     
 

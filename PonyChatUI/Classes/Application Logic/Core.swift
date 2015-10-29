@@ -12,6 +12,8 @@ public protocol PonyChatUIDelegate: NSObjectProtocol {
     
     func chatUIRequestOpenURL(URL: NSURL) -> Void;
     
+    func chatUIRequestPlayVoiceMessages(messageItems: [PonyChatUI.Entity.VoiceMessage]) -> Void;
+    
 }
 
 @objc public class PonyChatUICore: NSObject {

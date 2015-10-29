@@ -14,6 +14,7 @@ extension PonyChatUI.UserInterface {
     public class MessageCellNode: ASCellNode {
         
         weak var coreDelegate: PonyChatUIDelegate?
+        weak var messagingViewController: MainViewController?
         
         let messageItem: PonyChatUI.Entity.Message
         let messagingConfigure: Configure

@@ -17,6 +17,7 @@
 		6347F0861BDF6A99006C25F0 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6347F0841BDF6A99006C25F0 /* Info.plist */; };
 		6347F0871BDF6A99006C25F0 /* PonyChatUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 6347F0851BDF6A99006C25F0 /* PonyChatUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6382B6A31BE1D64F0077B1EF /* SystemMessageCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6382B6A21BE1D64E0077B1EF /* SystemMessageCellNode.swift */; };
+		6382B6A51BE1F1000077B1EF /* VoiceMessageCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6382B6A41BE1F1000077B1EF /* VoiceMessageCellNode.swift */; };
 		63BB6D241BE086C100993891 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB6D231BE086C100993891 /* ImageCacheManager.swift */; };
 		63BB6D261BE0874700993891 /* ImageDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB6D251BE0874700993891 /* ImageDownloadManager.swift */; };
 		63BB6D281BE092C000993891 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63BB6D271BE092C000993891 /* SDWebImage.framework */; };
@@ -67,6 +68,7 @@
 		6347F0841BDF6A99006C25F0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6347F0851BDF6A99006C25F0 /* PonyChatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PonyChatUI.h; sourceTree = "<group>"; };
 		6382B6A21BE1D64E0077B1EF /* SystemMessageCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemMessageCellNode.swift; sourceTree = "<group>"; };
+		6382B6A41BE1F1000077B1EF /* VoiceMessageCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceMessageCellNode.swift; sourceTree = "<group>"; };
 		63BB6D231BE086C100993891 /* ImageCacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		63BB6D251BE0874700993891 /* ImageDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloadManager.swift; sourceTree = "<group>"; };
 		63BB6D271BE092C000993891 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = "Pods/../build/Debug-iphoneos/SDWebImage.framework"; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				63C4BA291BDF8BB10033E9C8 /* MessageCellNode.swift */,
 				63C4BA2B1BDF8D6A0033E9C8 /* TextMessageCellNode.swift */,
 				6382B6A21BE1D64E0077B1EF /* SystemMessageCellNode.swift */,
+				6382B6A41BE1F1000077B1EF /* VoiceMessageCellNode.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -484,6 +487,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6382B6A51BE1F1000077B1EF /* VoiceMessageCellNode.swift in Sources */,
 				63C4BA1D1BDF751D0033E9C8 /* Wireframe.swift in Sources */,
 				63C4BA151BDF72890033E9C8 /* MessageManager.swift in Sources */,
 				63C4BA2C1BDF8D6A0033E9C8 /* TextMessageCellNode.swift in Sources */,

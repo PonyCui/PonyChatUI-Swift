@@ -38,6 +38,32 @@ extension PonyChatUI {
             }
         }
         
+        internal func nextVoiceMessages(from: Entity.VoiceMessage) -> [Entity.VoiceMessage] {
+            var nextItems: [Entity.VoiceMessage] = []
+            if let items = self.items {
+                var founded = false
+                for item in items {
+                    if let item = item as? Entity.VoiceMessage {
+                        if item.messageID == from.messageID {
+                            founded = true
+                            nextItems.append(item)
+                            continue
+                        }
+                        if !founded {
+                            continue
+                        }
+                        if !item.voicePlayed {
+                            nextItems.append(item)
+                        }
+                        else {
+                            break
+                        }
+                    }
+                }
+            }
+            return nextItems
+        }
+        
     }
     
 }

@@ -89,6 +89,10 @@ extension PonyChatUI.UserInterface {
                         return TextMessageCellNode(messageItem: messageItem,
                             messagingConfigure: self.messagingConfigure)
                     }
+                    else if let messageItem = messageItem as? PonyChatUI.Entity.VoiceMessage {
+                        return VoiceMessageCellNode(messageItem: messageItem,
+                            messagingConfigure: self.messagingConfigure)
+                    }
                     else {
                         return MessageCellNode(messageItem: messageItem,
                             messagingConfigure: self.messagingConfigure)
@@ -102,6 +106,7 @@ extension PonyChatUI.UserInterface {
             for node in tableView.visibleNodes() {
                 if let node = node as? MessageCellNode {
                     node.coreDelegate = self.coreDelegate
+                    node.messagingViewController = self
                     node.configureResumeStates()
                 }
             }
