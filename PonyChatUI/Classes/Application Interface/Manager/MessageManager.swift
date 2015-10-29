@@ -53,6 +53,9 @@ extension PonyChatUI {
                             continue
                         }
                         if !item.voicePlayed {
+                            if let sender = item.messageSender where sender.isOwnSender {
+                                continue
+                            }
                             nextItems.append(item)
                         }
                         else {

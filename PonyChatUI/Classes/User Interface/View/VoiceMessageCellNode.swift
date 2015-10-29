@@ -20,6 +20,8 @@ extension PonyChatUI.UserInterface {
             return imageView
         }
         let backgroundNode = ASImageNode()
+        let durationNode = ASTextNode()
+        let badgeNode = ASDisplayNode()
         
         var typedMessageItem: PonyChatUI.Entity.VoiceMessage? {
             if let messageItem = messageItem as? PonyChatUI.Entity.VoiceMessage {
@@ -35,6 +37,13 @@ extension PonyChatUI.UserInterface {
             backgroundNode.addTarget(self, action: Selector("handleBackgroundTapped"), forControlEvents: .TouchUpInside)
             contentNode.addSubnode(backgroundNode)
             contentNode.addSubnode(voiceNode)
+            contentNode.addSubnode(durationNode)
+            if let sender = messageItem.messageSender {
+                if !sender.isOwnSender {
+                    contentNode.addSubnode(badgeNode)
+                    badgeNode.backgroundColor = UIColor.redColor()
+                }
+            }
         }
         
         override func configureDatas() {
@@ -56,6 +65,14 @@ extension PonyChatUI.UserInterface {
                         }
                     }
                 }
+                badgeNode.hidden = messageItem.voicePlayed
+                durationNode.attributedString = NSAttributedString(string: "\(Int(ceil(messageItem.voiceDuration + 0.01)))''", attributes: messagingConfigure.nicknameStyle)
+            }
+        }
+        
+        func configurePlayedData() {
+            if let messageItem = typedMessageItem {
+                badgeNode.hidden = messageItem.voicePlayed
             }
         }
         
@@ -69,6 +86,11 @@ extension PonyChatUI.UserInterface {
             }
         }
         
+        override func calculateSizeThatFits(constrainedSize: CGSize) -> CGSize {
+            durationNode.measure(constrainedSize)
+            return super.calculateSizeThatFits(constrainedSize)
+        }
+        
         override func layout() {
             super.layout()
             if let messageItem = typedMessageItem {
@@ -77,10 +99,16 @@ extension PonyChatUI.UserInterface {
                     if sender.isOwnSender {
                         backgroundNode.frame = CGRect(x: avatarNode.frame.origin.x - messagingConfigure.avatarEdge.left - backgroundWidth, y: 2.0, width: backgroundWidth, height: 54.0)
                         voiceNode.frame = CGRect(x: backgroundNode.frame.origin.x + backgroundNode.frame.size.width - 62.0, y: 2.0, width: 44.0, height: 44.0)
+                        durationNode.frame = CGRect(x: backgroundNode.frame.origin.x - 4.0 - durationNode.calculatedSize.width, y: backgroundNode.frame.origin.y + backgroundNode.frame.size.height - durationNode.calculatedSize.height - 14.0, width: durationNode.calculatedSize.width, height: durationNode.calculatedSize.height)
+                        badgeNode.frame = CGRect(x: backgroundNode.frame.origin.x - 4.0 - durationNode.calculatedSize.width, y: 6.0, width: 8.0, height: 8.0)
+                        badgeNode.layer.cornerRadius = 4.0
                     }
                     else {
                         backgroundNode.frame = CGRect(x: avatarNode.frame.origin.x + avatarNode.frame.size.width + messagingConfigure.avatarEdge.right, y: 2.0, width: backgroundWidth, height: 54.0)
                         voiceNode.frame = CGRect(x: backgroundNode.frame.origin.x + 20.0, y: 2.0, width: 44.0, height: 44.0)
+                        durationNode.frame = CGRect(x: backgroundNode.frame.origin.x + backgroundNode.frame.size.width + 4.0, y: backgroundNode.frame.origin.y + backgroundNode.frame.size.height - durationNode.calculatedSize.height - 14.0, width: durationNode.calculatedSize.width, height: durationNode.calculatedSize.height)
+                        badgeNode.frame = CGRect(x: backgroundNode.frame.origin.x + backgroundNode.frame.size.width + 4.0, y: 6.0, width: 8.0, height: 8.0)
+                        badgeNode.layer.cornerRadius = 4.0
                     }
                 }
             }

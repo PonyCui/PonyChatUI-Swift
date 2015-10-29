@@ -106,7 +106,9 @@ extension PonyChatUI.Entity {
         // If voice is played, the badge will dismiss, or it will show in.
         public var voicePlayed: Bool = true {
             didSet {
-                
+                if let userInterface = userInterface as? PonyChatUI.UserInterface.VoiceMessageCellNode {
+                    userInterface.configurePlayedData()
+                }
             }
         }
         

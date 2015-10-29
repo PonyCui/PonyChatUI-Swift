@@ -109,6 +109,7 @@ class ViewController: UIViewController, PonyChatUIDelegate {
         for item in messageItems {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(3 * i * NSEC_PER_SEC)), dispatch_get_main_queue()) { () -> Void in
                 item.voicePlaying = true
+                item.voicePlayed = true
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(3 * i + 3 * NSEC_PER_SEC)), dispatch_get_main_queue()) { () -> Void in
                     item.voicePlaying = false
                 }
