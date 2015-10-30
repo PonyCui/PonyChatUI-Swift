@@ -10,9 +10,11 @@ import Foundation
 
 public protocol PonyChatUIDelegate: NSObjectProtocol {
     
-    func chatUIRequestOpenURL(URL: NSURL) -> Void;
+    func chatUIRequestOpenURL(URL: NSURL) -> Void
     
-    func chatUIRequestPlayVoiceMessages(messageItems: [PonyChatUI.Entity.VoiceMessage]) -> Void;
+    func chatUIRequestOpenLargeImage(messageItem: PonyChatUI.Entity.ImageMessage, originRect: CGRect) -> Void
+    
+    func chatUIRequestPlayVoiceMessages(messageItems: [PonyChatUI.Entity.VoiceMessage]) -> Void
     
 }
 

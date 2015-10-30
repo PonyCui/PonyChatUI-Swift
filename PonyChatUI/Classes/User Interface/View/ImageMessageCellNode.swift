@@ -16,7 +16,9 @@ extension PonyChatUI.UserInterface {
     class ImageMessageCellNode: MessageCellNode {
         
         let imageNode = ASDisplayNode { () -> UIView! in
-            return FLAnimatedImageView()
+            let view = FLAnimatedImageView()
+            view.contentMode = UIViewContentMode.ScaleAspectFill
+            return view
         }
         
         var typedMessageItem: PonyChatUI.Entity.ImageMessage? {
@@ -31,6 +33,11 @@ extension PonyChatUI.UserInterface {
         override func configureNodes() {
             super.configureNodes()
             contentNode.addSubnode(imageNode)
+            if let view = imageNode.view {
+                imageNode.userInteractionEnabled = true
+                view.userInteractionEnabled = true
+                view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "handleImageViewTapped"))
+            }
         }
         
         override func configureDatas() {
@@ -67,10 +74,11 @@ extension PonyChatUI.UserInterface {
         override func calculateSizeThatFits(constrainedSize: CGSize) -> CGSize {
             let superSize = super.calculateSizeThatFits(constrainedSize)
             if let imageSize = imageNodeSize() {
-                print(imageSize.height)
+                contentNode.frame = CGRect(x: 0, y: 0, width: superSize.width, height: imageSize.height + messagingConfigure.avatarEdge.top + messagingConfigure.cellGaps + nicknameHeight)
                 return CGSizeMake(superSize.width, imageSize.height + messagingConfigure.avatarEdge.top + messagingConfigure.cellGaps + nicknameHeight)
             }
             else {
+                contentNode.frame = CGRect(x: 0, y: 0, width: superSize.width, height: superSize.height)
                 return superSize
             }
         }
@@ -91,6 +99,14 @@ extension PonyChatUI.UserInterface {
                     }
                 }
                 
+            }
+        }
+        
+        func handleImageViewTapped() {
+            if let coreDelegate = coreDelegate, messageItem = self.typedMessageItem,
+                let keyWindow = UIApplication.sharedApplication().keyWindow {
+                let rect = imageNode.view.convertRect(imageNode.view.bounds, toView: keyWindow)
+                coreDelegate.chatUIRequestOpenLargeImage(messageItem, originRect: rect)
             }
         }
         

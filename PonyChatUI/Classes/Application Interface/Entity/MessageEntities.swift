@@ -125,13 +125,11 @@ extension PonyChatUI.Entity {
         public let imageURLString: String
         public let thumbURLString: String?
         public let imageSize: CGSize
-        public let isGIF: Bool
         
-        public init(mID: String, mDate: NSDate, imageURLString: String, thumbURLString: String?, imageSize: CGSize, isGIF: Bool = false) {
+        public init(mID: String, mDate: NSDate, imageURLString: String, thumbURLString: String?, imageSize: CGSize) {
             self.imageURLString = imageURLString
             self.thumbURLString = thumbURLString
             self.imageSize = imageSize
-            self.isGIF = isGIF
             super.init(mID: mID, mDate: mDate)
         }
         

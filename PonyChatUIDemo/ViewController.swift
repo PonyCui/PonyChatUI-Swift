@@ -127,8 +127,12 @@ class ViewController: UIViewController, PonyChatUIDelegate {
         UIApplication.sharedApplication().openURL(URL)
     }
     
+    func chatUIRequestOpenLargeImage(messageItem: PonyChatUI.Entity.ImageMessage, originRect: CGRect) {
+        print(messageItem)
+        print(originRect)
+    }
+    
     func chatUIRequestPlayVoiceMessages(messageItems: [PonyChatUI.Entity.VoiceMessage]) {
-        
         var i: UInt64 = 0
         for item in messageItems {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(3 * i * NSEC_PER_SEC)), dispatch_get_main_queue()) { () -> Void in
@@ -140,10 +144,7 @@ class ViewController: UIViewController, PonyChatUIDelegate {
             }
             i++
         }
-        
-        
     }
-    
 
 }
 
