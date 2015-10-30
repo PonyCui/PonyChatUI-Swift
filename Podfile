@@ -5,6 +5,7 @@ target 'PonyChatUI' do
 
 pod "AsyncDisplayKit"
 pod "SDWebImage"
+pod "FLAnimatedImage"
 
 end
 
@@ -12,6 +13,7 @@ target 'PonyChatUIDemo' do
 
 pod "AsyncDisplayKit"
 pod "SDWebImage"
+pod "FLAnimatedImage"
 
 end
 

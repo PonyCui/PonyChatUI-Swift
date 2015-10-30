@@ -60,6 +60,30 @@ class ViewController: UIViewController, PonyChatUIDelegate {
             message.messageSender = aSender
             items.append(message)
         }
+        
+        func m_1() -> () {
+            let imageMessage = PonyChatUI.Entity.ImageMessage(mID: "test", mDate: NSDate(), imageURLString: "http://ww1.sinaimg.cn/large/c631b412jw1exizdhe4q2j21kw11x7fm.jpg", thumbURLString: "http://ww1.sinaimg.cn/bmiddle/c631b412jw1exizdhe4q2j21kw11x7fm.jpg", imageSize: CGSize(width: 2048, height: 1365))
+            var aSender = PonyChatUI.Entity.Message.Sender()
+            aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
+            aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
+            aSender.senderNickname = "Pony"
+            imageMessage.messageSender = aSender
+            items.append(imageMessage)
+        }
+        
+        func m_2() -> () {
+            let imageMessage = PonyChatUI.Entity.ImageMessage(mID: "test", mDate: NSDate(), imageURLString: "http://pics.sc.chinaz.com/Files/pic/faces/2425/26.gif", thumbURLString: "http://pics.sc.chinaz.com/Files/pic/faces/2425/26.gif", imageSize: CGSize(width: 75, height: 75))
+            var aSender = PonyChatUI.Entity.Message.Sender()
+            aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
+            aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
+            aSender.senderNickname = "Pony"
+            imageMessage.messageSender = aSender
+            items.append(imageMessage)
+        }
+        
+        m_1()
+        m_2()
+        
         messageManager.insertItems(items)
     }
     

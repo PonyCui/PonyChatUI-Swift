@@ -38,12 +38,8 @@ extension PonyChatUI.UserInterface {
             contentNode.addSubnode(backgroundNode)
             contentNode.addSubnode(voiceNode)
             contentNode.addSubnode(durationNode)
-            if let sender = messageItem.messageSender {
-                if !sender.isOwnSender {
-                    contentNode.addSubnode(badgeNode)
-                    badgeNode.backgroundColor = UIColor.redColor()
-                }
-            }
+            contentNode.addSubnode(badgeNode)
+            badgeNode.backgroundColor = UIColor.redColor()
         }
         
         override func configureDatas() {
@@ -56,6 +52,7 @@ extension PonyChatUI.UserInterface {
                             voiceNodeView.contentMode = UIViewContentMode.Right
                             voiceNodeView.image = UIImage(named: "SenderVoiceNodePlaying", inBundle: NSBundle(forClass: PonyChatUICore.self), compatibleWithTraitCollection: nil)
                         }
+                        badgeNode.hidden = true
                     }
                     else {
                         backgroundNode.image = messagingConfigure.textBackgroundReceiver

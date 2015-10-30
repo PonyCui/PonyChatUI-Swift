@@ -93,6 +93,10 @@ extension PonyChatUI.UserInterface {
                         return VoiceMessageCellNode(messageItem: messageItem,
                             messagingConfigure: self.messagingConfigure)
                     }
+                    else if let messageItem = messageItem as? PonyChatUI.Entity.ImageMessage {
+                        return ImageMessageCellNode(messageItem: messageItem,
+                            messagingConfigure: self.messagingConfigure)
+                    }
                     else {
                         return MessageCellNode(messageItem: messageItem,
                             messagingConfigure: self.messagingConfigure)
