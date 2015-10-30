@@ -119,7 +119,7 @@ extension PonyChatUI.UserInterface {
                 nicknameHeight = nicknameNode.calculatedSize.height + messagingConfigure.nicknameEdge.top + messagingConfigure.nicknameEdge.bottom
             }
             contentNode.frame = CGRect(x: 0, y: 0.0, width: constrainedSize.width, height: messagingConfigure.avatarSize.height + messagingConfigure.avatarEdge.bottom + nicknameHeight)
-            return CGSize(width: constrainedSize.width, height: messagingConfigure.avatarSize.height + messagingConfigure.avatarEdge.bottom + messagingConfigure.cellGaps + 3.0)
+            return CGSize(width: constrainedSize.width, height: messagingConfigure.avatarSize.height + messagingConfigure.avatarEdge.top + messagingConfigure.avatarEdge.bottom + messagingConfigure.cellGaps)
         }
         
         public override func layout() {

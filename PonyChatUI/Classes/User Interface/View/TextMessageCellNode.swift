@@ -97,10 +97,10 @@ extension PonyChatUI.UserInterface {
                 var textRect = CGRect()
                 textRect.size = self.textNode.calculatedSize
                 if sender.isOwnSender {
-                    textRect.origin = CGPoint(x: avatarNode.frame.origin.x - messagingConfigure.avatarEdge.left - textRect.size.width - messagingConfigure.textEdge.right, y: messagingConfigure.textEdge.top + nicknameNode.frame.size.height + 3.0)
+                    textRect.origin = CGPoint(x: avatarNode.frame.origin.x - messagingConfigure.avatarEdge.left - textRect.size.width - messagingConfigure.textEdge.right, y: messagingConfigure.textEdge.top + nicknameNode.frame.size.height + messagingConfigure.avatarEdge.top)
                 }
                 else {
-                    textRect.origin = CGPoint(x: avatarNode.frame.origin.x + avatarNode.frame.size.width + messagingConfigure.avatarEdge.right + messagingConfigure.textEdge.left, y: messagingConfigure.textEdge.top + nicknameNode.frame.size.height + 3.0)
+                    textRect.origin = CGPoint(x: avatarNode.frame.origin.x + avatarNode.frame.size.width + messagingConfigure.avatarEdge.right + messagingConfigure.textEdge.left, y: messagingConfigure.textEdge.top + nicknameNode.frame.size.height + messagingConfigure.avatarEdge.top)
                 }
                 textNode.frame = textRect
                 backgroundNode.image = sender.isOwnSender ? messagingConfigure.textBackgroundSender : messagingConfigure.textBackgroundReceiver

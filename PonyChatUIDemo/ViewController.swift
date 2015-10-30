@@ -47,18 +47,16 @@ class ViewController: UIViewController, PonyChatUIDelegate {
         let systemMessage = PonyChatUI.Entity.SystemMessage(mID: "test", mDate: NSDate(), text: "这是一条系统消息")
         items.append(systemMessage)
         
-        for i in 0...100 {
-            var aSender = PonyChatUI.Entity.Message.Sender()
-            aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
-            aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
-            aSender.senderNickname = "Pony"
-//            let message = PonyChatUI.Entity.TextMessage(mID: "test", mDate: NSDate(), text: "\(NSDate().description) http://www.baidu.com 你好")
-            let message = PonyChatUI.Entity.VoiceMessage(mID: "\(i)", mDate: NSDate(), voiceURLString: "xxxxx", voiceDuration: Double(arc4random() % 100))
-            if i > 95 {
-                message.voicePlayed = false
+        func m_0() -> () {
+            for _ in 0...50 {
+                var aSender = PonyChatUI.Entity.Message.Sender()
+                aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
+                aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
+                aSender.senderNickname = "Pony"
+                let message = PonyChatUI.Entity.TextMessage(mID: "test", mDate: NSDate(), text: "\(NSDate().description)")
+                message.messageSender = aSender
+                items.append(message)
             }
-            message.messageSender = aSender
-            items.append(message)
         }
         
         func m_1() -> () {
@@ -81,6 +79,23 @@ class ViewController: UIViewController, PonyChatUIDelegate {
             items.append(imageMessage)
         }
         
+        func m_3() -> () {
+            for i in 0...50 {
+                var aSender = PonyChatUI.Entity.Message.Sender()
+                aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
+                aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
+                aSender.senderNickname = "Pony"
+                let message = PonyChatUI.Entity.VoiceMessage(mID: "\(i)", mDate: NSDate(), voiceURLString: "xxxxx", voiceDuration: Double(arc4random() % 100))
+                if i > 40 {
+                    message.voicePlayed = false
+                }
+                message.messageSender = aSender
+                items.append(message)
+            }
+        }
+        
+        m_0()
+        m_3()
         m_1()
         m_2()
         
@@ -120,8 +135,6 @@ class ViewController: UIViewController, PonyChatUIDelegate {
             })
         }
     }
-    
-    
     
     func chatUIRequestOpenURL(URL: NSURL) {
         UIApplication.sharedApplication().openURL(URL)
