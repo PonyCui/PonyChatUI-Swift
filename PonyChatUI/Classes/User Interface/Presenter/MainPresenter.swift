@@ -27,7 +27,17 @@ extension PonyChatUI.UserInterface {
         
         func appendMessage(count: Int) {
             if let userInterface = userInterface {
-                userInterface.tableViewAppendRows(count)
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    userInterface.tableViewAppendRows(count)
+                })
+            }
+        }
+        
+        func removeMessage(atIndex: Int) {
+            if let userInterface = userInterface {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    userInterface.tableViewRemoveRow(atIndex)
+                })
             }
         }
         

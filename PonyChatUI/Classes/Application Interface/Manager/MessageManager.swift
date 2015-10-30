@@ -38,6 +38,19 @@ extension PonyChatUI {
             }
         }
         
+        public func deleteItem(item: Entity.Message) {
+            if self.items != nil {
+                if let itemIndex = self.items!.indexOf({ (arrayItem) -> Bool in
+                    return arrayItem.messageID == item.messageID
+                }) {
+                    self.items!.removeAtIndex(itemIndex)
+                    if let delegate = delegate {
+                        delegate.deletedMessage(itemIndex)
+                    }
+                }
+            }
+        }
+        
         internal func nextVoiceMessages(from: Entity.VoiceMessage) -> [Entity.VoiceMessage] {
             var nextItems: [Entity.VoiceMessage] = []
             if let items = self.items {

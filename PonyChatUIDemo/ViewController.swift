@@ -20,7 +20,7 @@ class ViewController: UIViewController, PonyChatUIDelegate {
     
     func configureMenu() {
         let deleteItem = PonyChatUI.UserInterface.LongPressEntity(title: "删除") { (message) -> Void in
-            print("123456890")
+            self.messageManager.deleteItem(message)
         }
         PonyChatUI.UserInterface.Configure.sharedConfigure.longPressItems = [
             deleteItem
@@ -55,23 +55,23 @@ class ViewController: UIViewController, PonyChatUIDelegate {
     func loadHistory() {
         var items: [PonyChatUI.Entity.Message] = []
         
-        let systemMessage = PonyChatUI.Entity.SystemMessage(mID: "test", mDate: NSDate(), text: "这是一条系统消息")
+        let systemMessage = PonyChatUI.Entity.SystemMessage(mID: "system", mDate: NSDate(), text: "这是一条系统消息")
         items.append(systemMessage)
         
         func m_0() -> () {
-            for _ in 0...50 {
+            for i in 0...50 {
                 var aSender = PonyChatUI.Entity.Message.Sender()
                 aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
                 aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
                 aSender.senderNickname = "Pony"
-                let message = PonyChatUI.Entity.TextMessage(mID: "test", mDate: NSDate(), text: "\(NSDate().description)")
+                let message = PonyChatUI.Entity.TextMessage(mID: "text\(i)", mDate: NSDate(), text: "\(NSDate().description)")
                 message.messageSender = aSender
                 items.append(message)
             }
         }
         
         func m_1() -> () {
-            let imageMessage = PonyChatUI.Entity.ImageMessage(mID: "test", mDate: NSDate(), imageURLString: "http://ww1.sinaimg.cn/large/c631b412jw1exizdhe4q2j21kw11x7fm.jpg", thumbURLString: "http://ww1.sinaimg.cn/bmiddle/c631b412jw1exizdhe4q2j21kw11x7fm.jpg", imageSize: CGSize(width: 2048, height: 1365))
+            let imageMessage = PonyChatUI.Entity.ImageMessage(mID: "image", mDate: NSDate(), imageURLString: "http://ww1.sinaimg.cn/large/c631b412jw1exizdhe4q2j21kw11x7fm.jpg", thumbURLString: "http://ww1.sinaimg.cn/bmiddle/c631b412jw1exizdhe4q2j21kw11x7fm.jpg", imageSize: CGSize(width: 2048, height: 1365))
             var aSender = PonyChatUI.Entity.Message.Sender()
             aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
             aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
@@ -81,7 +81,7 @@ class ViewController: UIViewController, PonyChatUIDelegate {
         }
         
         func m_2() -> () {
-            let imageMessage = PonyChatUI.Entity.ImageMessage(mID: "test", mDate: NSDate(), imageURLString: "http://pics.sc.chinaz.com/Files/pic/faces/2425/26.gif", thumbURLString: "http://pics.sc.chinaz.com/Files/pic/faces/2425/26.gif", imageSize: CGSize(width: 75, height: 75))
+            let imageMessage = PonyChatUI.Entity.ImageMessage(mID: "gifimage", mDate: NSDate(), imageURLString: "http://pics.sc.chinaz.com/Files/pic/faces/2425/26.gif", thumbURLString: "http://pics.sc.chinaz.com/Files/pic/faces/2425/26.gif", imageSize: CGSize(width: 75, height: 75))
             var aSender = PonyChatUI.Entity.Message.Sender()
             aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
             aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
@@ -96,7 +96,7 @@ class ViewController: UIViewController, PonyChatUIDelegate {
                 aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
                 aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
                 aSender.senderNickname = "Pony"
-                let message = PonyChatUI.Entity.VoiceMessage(mID: "\(i)", mDate: NSDate(), voiceURLString: "xxxxx", voiceDuration: Double(arc4random() % 100))
+                let message = PonyChatUI.Entity.VoiceMessage(mID: "voice\(i)", mDate: NSDate(), voiceURLString: "xxxxx", voiceDuration: Double(arc4random() % 100))
                 if i > 40 {
                     message.voicePlayed = false
                 }

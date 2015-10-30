@@ -40,6 +40,11 @@ extension PonyChatUI.UserInterface {
             contentNode.addSubnode(durationNode)
             contentNode.addSubnode(badgeNode)
             badgeNode.backgroundColor = UIColor.redColor()
+            badgeNode.hidden = true
+            backgroundNode.view.userInteractionEnabled = true
+            if let longPressGesture = longPressGesture {
+                backgroundNode.view.addGestureRecognizer(longPressGesture)
+            }
         }
         
         override func configureDatas() {
@@ -52,7 +57,6 @@ extension PonyChatUI.UserInterface {
                             voiceNodeView.contentMode = UIViewContentMode.Right
                             voiceNodeView.image = UIImage(named: "SenderVoiceNodePlaying", inBundle: NSBundle(forClass: PonyChatUICore.self), compatibleWithTraitCollection: nil)
                         }
-                        badgeNode.hidden = true
                     }
                     else {
                         backgroundNode.image = messagingConfigure.textBackgroundReceiver
@@ -60,9 +64,9 @@ extension PonyChatUI.UserInterface {
                             voiceNodeView.contentMode = UIViewContentMode.Left
                             voiceNodeView.image = UIImage(named: "ReceiverVoiceNodePlaying", inBundle: NSBundle(forClass: PonyChatUICore.self), compatibleWithTraitCollection: nil)
                         }
+                        badgeNode.hidden = messageItem.voicePlayed
                     }
                 }
-                badgeNode.hidden = messageItem.voicePlayed
                 durationNode.attributedString = NSAttributedString(string: "\(Int(ceil(messageItem.voiceDuration + 0.01)))''", attributes: messagingConfigure.nicknameStyle)
             }
         }
@@ -109,6 +113,7 @@ extension PonyChatUI.UserInterface {
                         badgeNode.frame = CGRect(x: backgroundNode.frame.origin.x + backgroundNode.frame.size.width + 4.0, y: backgroundNode.frame.origin.y + 6.0, width: 8.0, height: 8.0)
                         badgeNode.layer.cornerRadius = 4.0
                     }
+                    mainContentRect = backgroundNode.frame
                 }
             }
         }
@@ -187,6 +192,11 @@ extension PonyChatUI.UserInterface {
                     }
                 }
             }
+        }
+        
+        override func handleLongPressed(sender: UILongPressGestureRecognizer) {
+            _menuViewController.titles = []
+            super.handleLongPressed(sender)
         }
         
     }

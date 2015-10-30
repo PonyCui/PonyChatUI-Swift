@@ -28,6 +28,12 @@ extension PonyChatUI.UserInterface {
             }
         }
         
+        func deletedMessage(atIndex: Int) {
+            if let delegate = delegate {
+                delegate.removeMessage(atIndex)
+            }
+        }
+        
     }
     
 }

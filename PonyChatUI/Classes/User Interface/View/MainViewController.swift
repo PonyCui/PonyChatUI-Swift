@@ -134,7 +134,16 @@ extension PonyChatUI.UserInterface {
             messagingView.endUpdatesAnimated(true) { (_) -> Void in
                 self.tableViewAutoScroll()
             }
-            
+        }
+        
+        func tableViewRemoveRow(atIndex: Int) {
+            messagingView.beginUpdates()
+            messagingView.deleteRowsAtIndexPaths([NSIndexPath(forRow: atIndex, inSection: 0)], withRowAnimation: .None)
+            if let items = eventHandler.interactor.manager?.items {
+                messagingRows = items.count
+            }
+            messagingView.endUpdatesAnimated(true) { (_) -> Void in
+            }
         }
         
         func tableViewAutoScroll(force force: Bool = false, animated: Bool = true) {

@@ -37,6 +37,9 @@ extension PonyChatUI.UserInterface {
                 imageNode.userInteractionEnabled = true
                 view.userInteractionEnabled = true
                 view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "handleImageViewTapped"))
+                if let longPressGesture = longPressGesture {
+                    view.addGestureRecognizer(longPressGesture)
+                }
             }
         }
         
@@ -97,8 +100,8 @@ extension PonyChatUI.UserInterface {
                         imageNode.layer.mask = self.imageNodeReceiverShape(imageNode.frame.size)
                         imageNode.layer.masksToBounds = true
                     }
+                    mainContentRect = imageNode.frame
                 }
-                
             }
         }
         
@@ -167,6 +170,11 @@ extension PonyChatUI.UserInterface {
             let maskLayer = CAShapeLayer()
             maskLayer.path = bezierPath.CGPath
             return maskLayer
+        }
+        
+        override func handleLongPressed(sender: UILongPressGestureRecognizer) {
+            _menuViewController.titles = []
+            super.handleLongPressed(sender)
         }
         
     }
