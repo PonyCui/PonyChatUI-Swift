@@ -11,7 +11,7 @@ import AsyncDisplayKit
 
 extension PonyChatUI.UserInterface {
     
-    public class MessageCellNode: ASCellNode {
+    public class MessageCellNode: ASCellNode, PCUMenuViewControllerDelegate {
         
         weak var coreDelegate: PonyChatUIDelegate?
         weak var messagingViewController: MainViewController?
@@ -25,6 +25,8 @@ extension PonyChatUI.UserInterface {
         var sendingIndicatorNode: ASDisplayNode? = nil
         var sendingErrorNode: ASImageNode? = nil
         let contentNode = ASDisplayNode()
+        
+        var longPressGesture: UILongPressGestureRecognizer?
         
         init(messageItem: PonyChatUI.Entity.Message, messagingConfigure: Configure) {
             self.messageItem = messageItem
@@ -47,6 +49,8 @@ extension PonyChatUI.UserInterface {
             if self.messagingConfigure.nicknameShow {
                 contentNode.addSubnode(nicknameNode)
             }
+            longPressGesture = UILongPressGestureRecognizer(target: self, action: "handleLongPressed:")
+            longPressGesture!.minimumPressDuration = 0.25
         }
         
         func configureDatas() {
@@ -141,6 +145,32 @@ extension PonyChatUI.UserInterface {
             }
             else {
                 avatarNode.hidden = true
+            }
+        }
+        
+        let _menuViewController = MenuViewController(titles: [])
+        func handleLongPressed(sender: UILongPressGestureRecognizer) {
+            var titles = _menuViewController.titles
+            for item in messagingConfigure.longPressItems {
+                titles.append(item.title)
+            }
+            _menuViewController.titles = titles
+            if sender.state == UIGestureRecognizerState.Began {
+                _menuViewController.delegate = self
+                var thePoint = self.view.convertPoint(mainContentRect.origin, toView: UIApplication.sharedApplication().keyWindow)
+                thePoint.x += (mainContentRect.width / 2.0)
+                _menuViewController.showMenuView(thePoint)
+            }
+        }
+        
+        func menuItemDidPressed(menuViewController: PonyChatUI.UserInterface.MenuViewController, itemIndex: Int) {
+            if itemIndex < _menuViewController.titles.count {
+                let title = _menuViewController.titles[itemIndex]
+                for item in messagingConfigure.longPressItems {
+                    if item.title == title {
+                        item.executingBlock(message: messageItem)
+                    }
+                }
             }
         }
         

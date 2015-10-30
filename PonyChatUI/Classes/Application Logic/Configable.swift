@@ -10,6 +10,15 @@ import Foundation
 
 extension PonyChatUI.UserInterface {
     
+    public struct LongPressEntity {
+        public let title: String
+        public let executingBlock: (message: PonyChatUI.Entity.Message) -> Void
+        public init(title: String, executingBlock: (message: PonyChatUI.Entity.Message) -> Void) {
+            self.title = title
+            self.executingBlock = executingBlock
+        }
+    }
+    
     public struct Configure {
         
         public static var sharedConfigure: Configure = Configure()
@@ -28,6 +37,8 @@ extension PonyChatUI.UserInterface {
         public var textEdge = UIEdgeInsets(top: 14, left: 18, bottom: 11, right: 18)
         public var textBackgroundSender = UIImage(named: "SenderTextNodeBkg", inBundle: NSBundle(forClass: PonyChatUICore.self), compatibleWithTraitCollection: nil)!.resizableImageWithCapInsets(UIEdgeInsets(top: 28, left: 20, bottom: 15, right: 20), resizingMode: .Stretch)
         public var textBackgroundReceiver = UIImage(named: "ReceiverTextNodeBkg", inBundle: NSBundle(forClass: PonyChatUICore.self), compatibleWithTraitCollection: nil)!.resizableImageWithCapInsets(UIEdgeInsets(top: 28, left: 20, bottom: 15, right: 20), resizingMode: .Stretch)
+        
+        public var longPressItems = [LongPressEntity]()
         
         public var systemTextStyle = [String: AnyObject]()
         

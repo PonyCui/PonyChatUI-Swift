@@ -18,8 +18,19 @@ class ViewController: UIViewController, PonyChatUIDelegate {
     var chatViewController: PonyChatUI.UserInterface.MainViewController?
     var chatView: UIView?
     
+    func configureMenu() {
+        let deleteItem = PonyChatUI.UserInterface.LongPressEntity(title: "删除") { (message) -> Void in
+            print("123456890")
+        }
+        PonyChatUI.UserInterface.Configure.sharedConfigure.longPressItems = [
+            deleteItem
+        ]
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureMenu()
         if preloaded {
             if let chatViewController = chatViewController, let chatView = chatView {
                 chatViewController.coreDelegate = self

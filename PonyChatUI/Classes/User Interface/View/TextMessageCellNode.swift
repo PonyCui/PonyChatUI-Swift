@@ -29,6 +29,10 @@ extension PonyChatUI.UserInterface {
             super.configureNodes()
             contentNode.addSubnode(backgroundNode)
             contentNode.addSubnode(textNode)
+            if let longPressGesture = longPressGesture {
+                backgroundNode.view.userInteractionEnabled = true
+                backgroundNode.view.addGestureRecognizer(longPressGesture)
+            }
         }
         
         override func configureDatas() {
@@ -124,6 +128,24 @@ extension PonyChatUI.UserInterface {
         func textNode(textNode: ASTextNode!, tappedLinkAttribute attribute: String!, value: AnyObject!, atPoint point: CGPoint, textRange: NSRange) {
             if let coreDelegate = coreDelegate, let URL = value as? NSURL {
                 coreDelegate.chatUIRequestOpenURL(URL)
+            }
+        }
+        
+        override func handleLongPressed(sender: UILongPressGestureRecognizer) {
+            _menuViewController.titles = ["复制"]
+            super.handleLongPressed(sender)
+        }
+        
+        override func menuItemDidPressed(menuViewController: PonyChatUI.UserInterface.MenuViewController, itemIndex: Int) {
+            super.menuItemDidPressed(menuViewController, itemIndex: itemIndex)
+            if itemIndex < _menuViewController.titles.count {
+                let title = _menuViewController.titles[itemIndex]
+                if title == "复制" {
+                    if let messageItem = typedMessageItem {
+                        UIPasteboard.generalPasteboard().persistent = true
+                        UIPasteboard.generalPasteboard().string = messageItem.text
+                    }
+                }
             }
         }
         
