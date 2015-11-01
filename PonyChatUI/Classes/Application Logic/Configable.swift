@@ -12,8 +12,8 @@ extension PonyChatUI.UserInterface {
     
     public struct LongPressEntity {
         public let title: String
-        public let executingBlock: (message: PonyChatUI.Entity.Message) -> Void
-        public init(title: String, executingBlock: (message: PonyChatUI.Entity.Message) -> Void) {
+        public let executingBlock: (message: PonyChatUI.Entity.Message, chatViewController: PonyChatUI.UserInterface.MainViewController?) -> Void
+        public init(title: String, executingBlock: (message: PonyChatUI.Entity.Message, chatViewController: PonyChatUI.UserInterface.MainViewController?) -> Void) {
             self.title = title
             self.executingBlock = executingBlock
         }

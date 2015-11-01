@@ -13,7 +13,7 @@ extension PonyChatUI.UserInterface {
     
     public class MainViewController: UIViewController, ASTableViewDataSource, ASTableViewDelegate {
         
-        let eventHandler = MainPresenter()
+        public let eventHandler = MainPresenter()
         
         public weak var coreDelegate: PonyChatUIDelegate? {
             didSet {

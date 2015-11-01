@@ -168,7 +168,7 @@ extension PonyChatUI.UserInterface {
                 let title = _menuViewController.titles[itemIndex]
                 for item in messagingConfigure.longPressItems {
                     if item.title == title {
-                        item.executingBlock(message: messageItem)
+                        item.executingBlock(message: messageItem, chatViewController: self.messagingViewController!)
                     }
                 }
             }

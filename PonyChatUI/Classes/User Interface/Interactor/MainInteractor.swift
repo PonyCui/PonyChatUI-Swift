@@ -12,7 +12,7 @@ extension PonyChatUI.UserInterface {
     
     public class MainInteractor {
         
-        var manager: PonyChatUI.MessageManager?
+        public var manager: PonyChatUI.MessageManager?
         
         weak var delegate: MainPresenter?
         

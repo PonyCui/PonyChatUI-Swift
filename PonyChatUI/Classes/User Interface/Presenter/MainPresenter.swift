@@ -12,7 +12,7 @@ extension PonyChatUI.UserInterface {
     
     public class MainPresenter {
         
-        let interactor = MainInteractor()
+        public let interactor = MainInteractor()
         weak var userInterface: MainViewController?
         
         init() {
