@@ -43,6 +43,7 @@ extension PonyChatUI.UserInterface {
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(100 * NSEC_PER_MSEC)), dispatch_get_main_queue()) { () -> Void in
                         completion(_main.0, _main.1)
                         _main.0.viewWillLayoutSubviews()
+                        self.preloadWindow.rootViewController = nil
                     }
                 }
         }

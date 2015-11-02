@@ -36,6 +36,11 @@ extension PonyChatUI.UserInterface {
                 layoutSubviewsWithAnimation()
             }
         }
+        private var keyboardViewHeight: CGFloat = 0.0 {
+            didSet {
+                layoutSubviewsWithAnimation()
+            }
+        }
         
         deinit {
             messagingView.asyncDelegate = nil
@@ -52,6 +57,19 @@ extension PonyChatUI.UserInterface {
             }
         }
         
+        public override func viewWillAppear(animated: Bool) {
+            super.viewWillAppear(animated)
+            configureKeyboardNotifications()
+        }
+        
+        public override func viewWillDisappear(animated: Bool) {
+            super.viewWillDisappear(animated)
+            if let keyWindow = UIApplication.sharedApplication().keyWindow {
+                keyWindow.endEditing(true)
+            }
+            removeKeyboardNotifications()
+        }
+        
         override public func viewDidAppear(animated: Bool) {
             super.viewDidAppear(animated)
             if UIView.areAnimationsEnabled() {
@@ -61,8 +79,8 @@ extension PonyChatUI.UserInterface {
         
         override public func viewWillLayoutSubviews() {
             if let footerView = footerView {
-                messagingView.frame = CGRect(x: view.bounds.origin.x, y: view.bounds.origin.y, width: view.bounds.size.width, height: view.bounds.size.height - footerViewHeight)
-                footerView.frame = CGRect(x: view.bounds.origin.x, y: view.bounds.origin.y + view.bounds.size.height - footerViewHeight, width: view.frame.size.width, height: footerViewHeight)
+                messagingView.frame = CGRect(x: view.bounds.origin.x, y: view.bounds.origin.y, width: view.bounds.size.width, height: view.bounds.size.height - footerViewHeight - keyboardViewHeight)
+                footerView.frame = CGRect(x: view.bounds.origin.x, y: view.bounds.origin.y + view.bounds.size.height - footerViewHeight - self.keyboardViewHeight, width: view.frame.size.width, height: footerViewHeight)
             }
             else {
                 messagingView.frame = view.bounds
@@ -73,13 +91,13 @@ extension PonyChatUI.UserInterface {
             if let footerView = footerView {
                 UIView.animateKeyframesWithDuration(0.3, delay: 0.0, options: [],
                     animations: { () -> Void in
-                        self.messagingView.frame = CGRect(x: self.view.bounds.origin.x, y: self.view.bounds.origin.y, width: self.view.bounds.size.width, height: self.view.bounds.size.height - self.footerViewHeight)
-                        footerView.frame = CGRect(x: self.view.bounds.origin.x, y: self.view.bounds.origin.y + self.view.bounds.size.height - self.footerViewHeight, width: self.view.bounds.size.width, height: self.footerViewHeight)
+                        self.messagingView.frame = CGRect(x: self.view.bounds.origin.x, y: self.view.bounds.origin.y, width: self.view.bounds.size.width, height: self.view.bounds.size.height - self.footerViewHeight - self.keyboardViewHeight)
+                        footerView.frame = CGRect(x: self.view.bounds.origin.x, y: self.view.bounds.origin.y + self.view.bounds.size.height - self.footerViewHeight - self.keyboardViewHeight, width: self.view.bounds.size.width, height: self.footerViewHeight)
                         self.tableViewAutoScroll(force: true, animated: true)
                     },
                     completion: { (_) -> Void in
-                        self.messagingView.frame = CGRect(x: self.view.bounds.origin.x, y: self.view.bounds.origin.y, width: self.view.bounds.size.width, height: self.view.bounds.size.height - self.footerViewHeight)
-                        footerView.frame = CGRect(x: self.view.bounds.origin.x, y: self.view.bounds.origin.y + self.view.bounds.size.height - self.footerViewHeight, width: self.view.bounds.size.width, height: self.footerViewHeight)
+                        self.messagingView.frame = CGRect(x: self.view.bounds.origin.x, y: self.view.bounds.origin.y, width: self.view.bounds.size.width, height: self.view.bounds.size.height - self.footerViewHeight - self.keyboardViewHeight)
+                        footerView.frame = CGRect(x: self.view.bounds.origin.x, y: self.view.bounds.origin.y + self.view.bounds.size.height - self.footerViewHeight - self.keyboardViewHeight, width: self.view.bounds.size.width, height: self.footerViewHeight)
                         self.tableViewAutoScroll(force: true, animated: true)
                 })
             }
@@ -163,6 +181,12 @@ extension PonyChatUI.UserInterface {
             }
         }
         
+        public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+            if let keyWindow = UIApplication.sharedApplication().keyWindow {
+                keyWindow.endEditing(true)
+            }
+        }
+        
         func tableViewInsertRows(count: Int) {
             if messagingRows == 0 {
                 messagingView.reloadDataWithCompletion({ () -> Void in
@@ -239,6 +263,36 @@ extension PonyChatUI.UserInterface {
         func tableViewEndLoadingItems() {
             messagingView.tableHeaderView = nil
             messagingView.automaticallyAdjustsContentOffset = false
+        }
+        
+        //MARK: Keyboard
+        
+        let endEditingTapGesture = UITapGestureRecognizer()
+        func configureKeyboardNotifications() {
+            NSNotificationCenter.defaultCenter().addObserverForName(UIKeyboardWillShowNotification, object: nil, queue: NSOperationQueue.mainQueue()) { (sender: NSNotification) -> Void in
+                if let userInfo = sender.userInfo as? [String: AnyObject] {
+                    if let keyboardRectValue = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+                        let keyboardRect = keyboardRectValue.CGRectValue()
+                        self.keyboardViewHeight = keyboardRect.size.height
+                    }
+                }
+            }
+            NSNotificationCenter.defaultCenter().addObserverForName(UIKeyboardWillHideNotification, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+                self.keyboardViewHeight = 0
+            }
+            endEditingTapGesture.addTarget(self, action: "endEditing")
+            messagingView.addGestureRecognizer(endEditingTapGesture)
+        }
+        
+        func removeKeyboardNotifications() {
+            NSNotificationCenter.defaultCenter().removeObserver(self)
+            messagingView.removeGestureRecognizer(endEditingTapGesture)
+        }
+        
+        func endEditing() {
+            if let keyWindow = UIApplication.sharedApplication().keyWindow {
+                keyWindow.endEditing(true)
+            }
         }
         
     }
