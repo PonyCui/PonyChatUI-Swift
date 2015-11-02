@@ -18,6 +18,9 @@ class ViewController: UIViewController, PonyChatUIDelegate {
     var chatViewController: PonyChatUI.UserInterface.MainViewController?
     var chatView: UIView?
     
+    let toolViewController = UIStoryboard(name: "Main",
+        bundle: nil).instantiateViewControllerWithIdentifier("ToolViewController")
+    
     func configureMenu() {
         let deleteItem = PonyChatUI.UserInterface.LongPressEntity(title: "删除") { (message, chatViewController) -> Void in
             if let messageManager = chatViewController?.eventHandler.interactor.manager {
@@ -29,12 +32,12 @@ class ViewController: UIViewController, PonyChatUIDelegate {
         ]
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureMenu()
         if preloaded {
             if let chatViewController = chatViewController, let chatView = chatView {
+                chatViewController.footerViewHeight = 44
                 chatViewController.coreDelegate = self
                 chatViewController.removeFromParentViewController()
                 chatView.removeFromSuperview()
@@ -44,14 +47,17 @@ class ViewController: UIViewController, PonyChatUIDelegate {
         }
         else {
             loadHistory()
-            let chatMain = PonyChatUICore.sharedCore.wireframe.main(messageManager)
+            toolViewController.view.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44)
+            let chatMain = PonyChatUICore.sharedCore.wireframe.main(messageManager,
+                messagingConfigure: nil,
+                footerView: toolViewController.view)
+            chatMain.0.footerViewHeight = 44
             chatMain.0.coreDelegate = self
             chatViewController = chatMain.0
             chatView = chatMain.1
             addChildViewController(chatMain.0)
             view.addSubview(chatMain.1)
         }
-        NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "mockMessage", userInfo: nil, repeats: true)
     }
     
     func loadHistory() {
@@ -75,7 +81,6 @@ class ViewController: UIViewController, PonyChatUIDelegate {
         }
         
         func m_1() -> () {
-            let random = Double(arc4random() % 200)
             let mDate = NSDate(timeIntervalSinceNow: -86400 * 3 + 200)
             let imageMessage = PonyChatUI.Entity.ImageMessage(mID: "image", mDate: mDate, imageURLString: "http://ww1.sinaimg.cn/large/c631b412jw1exizdhe4q2j21kw11x7fm.jpg", thumbURLString: "http://ww1.sinaimg.cn/bmiddle/c631b412jw1exizdhe4q2j21kw11x7fm.jpg", imageSize: CGSize(width: 2048, height: 1365))
             var aSender = PonyChatUI.Entity.Message.Sender()
@@ -87,7 +92,6 @@ class ViewController: UIViewController, PonyChatUIDelegate {
         }
         
         func m_2() -> () {
-            let random = Double(arc4random() % 200)
             let mDate = NSDate(timeIntervalSinceNow: -86400 * 2 + 200)
             let imageMessage = PonyChatUI.Entity.ImageMessage(mID: "gifimage", mDate: mDate, imageURLString: "http://pics.sc.chinaz.com/Files/pic/faces/2425/26.gif", thumbURLString: "http://pics.sc.chinaz.com/Files/pic/faces/2425/26.gif", imageSize: CGSize(width: 75, height: 75))
             var aSender = PonyChatUI.Entity.Message.Sender()
@@ -149,7 +153,12 @@ class ViewController: UIViewController, PonyChatUIDelegate {
         if let nextViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ViewController") as? ViewController {
             nextViewController.preloaded = true
             nextViewController.loadHistory()
-            PonyChatUICore.sharedCore.wireframe.preload(nextViewController.messageManager, size: CGSize(width: self.view.bounds.width, height: self.view.bounds.height - 64.0), completion: { (mainViewController, mainView) -> Void in
+            nextViewController.toolViewController.view.frame = CGRect(
+                x: 0,
+                y: 0,
+                width: self.view.bounds.width,
+                height: 44)
+            PonyChatUICore.sharedCore.wireframe.preload(nextViewController.messageManager, messagingConfigure: nil, footerView: nextViewController.toolViewController.view, size: CGSize(width: self.view.bounds.width, height: self.view.bounds.height - 64.0), completion: { (mainViewController, mainView) -> Void in
                 nextViewController.chatViewController = mainViewController
                 nextViewController.chatView = mainView
                 self.navigationController?.pushViewController(nextViewController, animated: true)

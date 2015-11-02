@@ -30,6 +30,13 @@ extension PonyChatUI.UserInterface {
         let messagingView: ASTableView = ASTableView()
         var messagingRows: Int = 0
         
+        public var footerView: UIView?
+        public var footerViewHeight: CGFloat = 0.0 {
+            didSet {
+                
+            }
+        }
+        
         deinit {
             messagingView.asyncDelegate = nil
             messagingView.asyncDataSource = nil
@@ -40,6 +47,9 @@ extension PonyChatUI.UserInterface {
             eventHandler.userInterface = self
             configureMessagingView()
             view.addSubview(messagingView)
+            if let footerView = footerView {
+                view.addSubview(footerView)
+            }
         }
         
         override public func viewDidAppear(animated: Bool) {
@@ -50,7 +60,29 @@ extension PonyChatUI.UserInterface {
         }
         
         override public func viewWillLayoutSubviews() {
-            messagingView.frame = view.bounds
+            if let footerView = footerView {
+                messagingView.frame = CGRect(x: view.bounds.origin.x, y: view.bounds.origin.y, width: view.bounds.size.width, height: view.bounds.size.height - footerViewHeight)
+                footerView.frame = CGRect(x: view.bounds.origin.x, y: view.bounds.origin.y + view.bounds.size.height - footerViewHeight, width: view.frame.size.width, height: footerViewHeight)
+            }
+            else {
+                messagingView.frame = view.bounds
+            }
+        }
+        
+        public func layoutSubviewsWithAnimation() {
+            if let footerView = footerView {
+                UIView.animateKeyframesWithDuration(0.3, delay: 0.0, options: [],
+                    animations: { () -> Void in
+                        self.messagingView.frame = CGRect(x: self.view.bounds.origin.x, y: self.view.bounds.origin.y, width: self.view.bounds.size.width, height: self.view.bounds.size.height - self.footerViewHeight)
+                        footerView.frame = CGRect(x: self.view.bounds.origin.x, y: self.view.bounds.origin.y + self.view.bounds.size.height - self.footerViewHeight, width: self.view.bounds.size.width, height: self.footerViewHeight)
+                        self.tableViewAutoScroll(force: true, animated: true)
+                    },
+                    completion: { (_) -> Void in
+                        self.messagingView.frame = CGRect(x: self.view.bounds.origin.x, y: self.view.bounds.origin.y, width: self.view.bounds.size.width, height: self.view.bounds.size.height - self.footerViewHeight)
+                        footerView.frame = CGRect(x: self.view.bounds.origin.x, y: self.view.bounds.origin.y + self.view.bounds.size.height - self.footerViewHeight, width: self.view.bounds.size.width, height: self.footerViewHeight)
+                        self.tableViewAutoScroll(force: true, animated: true)
+                })
+            }
         }
         
         func configureMessagingView() {

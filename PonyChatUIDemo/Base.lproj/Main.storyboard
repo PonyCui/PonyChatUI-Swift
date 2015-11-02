@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F19a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Qtf-3A-9WO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F19a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Qtf-3A-9WO">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
@@ -14,7 +14,7 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -28,7 +28,40 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="533" y="457"/>
+            <point key="canvasLocation" x="284.26666666666665" y="432.62666666666667"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="KDK-NA-L5M">
+            <objects>
+                <viewController storyboardIdentifier="ToolViewController" id="4oK-GN-ZX1" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="TVm-U4-WgO"/>
+                        <viewControllerLayoutGuide type="bottom" id="zou-bb-pSD"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="euf-Ch-00l">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jGW-uh-5hR">
+                                <rect key="frame" x="12" y="7" width="296" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="jGW-uh-5hR" firstAttribute="centerY" secondItem="euf-Ch-00l" secondAttribute="centerY" id="6Fr-o7-gNq"/>
+                            <constraint firstAttribute="trailing" secondItem="jGW-uh-5hR" secondAttribute="trailing" constant="12" id="72S-bp-SAA"/>
+                            <constraint firstItem="jGW-uh-5hR" firstAttribute="leading" secondItem="euf-Ch-00l" secondAttribute="leading" constant="12" id="gn5-o2-gmQ"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="44"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xAu-26-DG2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="284" y="813"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9o9-tF-2x9">
@@ -44,7 +77,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HdO-Ad-TJJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-218" y="457"/>
+            <point key="canvasLocation" x="-116.26666666666667" y="432.62666666666667"/>
         </scene>
     </scenes>
 </document>
