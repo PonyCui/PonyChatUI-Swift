@@ -121,12 +121,17 @@ extension PonyChatUI.UserInterface {
         func handleBackgroundTapped() {
             if let coreDelegate = coreDelegate {
                 if let messageItem = self.typedMessageItem {
-                    if let messagingViewController = messagingViewController,
-                        let manager = messagingViewController.eventHandler.interactor.manager {
-                        coreDelegate.chatUIRequestPlayVoiceMessages(manager.nextVoiceMessages(messageItem))
+                    if messageItem.voicePlaying {
+                        coreDelegate.chatUIRequestPauseVoicePlaying(messageItem)
                     }
                     else {
-                        coreDelegate.chatUIRequestPlayVoiceMessages([messageItem])
+                        if let messagingViewController = messagingViewController,
+                            let manager = messagingViewController.eventHandler.interactor.manager {
+                                coreDelegate.chatUIRequestPlayVoiceMessages(manager.nextVoiceMessages(messageItem))
+                        }
+                        else {
+                            coreDelegate.chatUIRequestPlayVoiceMessages([messageItem])
+                        }
                     }
                 }
             }

@@ -51,7 +51,7 @@ class ViewController: UIViewController, PonyChatUIDelegate {
             addChildViewController(chatMain.0)
             view.addSubview(chatMain.1)
         }
-//        NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "debug", userInfo: nil, repeats: true)
+        NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "mockMessage", userInfo: nil, repeats: true)
     }
     
     func loadHistory() {
@@ -115,12 +115,12 @@ class ViewController: UIViewController, PonyChatUIDelegate {
         messageManager.insertItems(items)
     }
     
-    func debug() {
+    func mockMessage() {
         var aSender = PonyChatUI.Entity.Message.Sender()
         aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
         aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
         aSender.senderNickname = "Pony"
-        let message = PonyChatUI.Entity.TextMessage(mID: "test", mDate: NSDate(), text: NSDate().description)
+        let message = PonyChatUI.Entity.TextMessage(mID: "mock\(NSDate().description)", mDate: NSDate(), text: NSDate().description)
         message.messageSender = aSender
         messageManager.appendItem(message)
     }
@@ -158,10 +158,17 @@ class ViewController: UIViewController, PonyChatUIDelegate {
         print(originRect)
     }
     
+    var nowPlayingItem: PonyChatUI.Entity.VoiceMessage?
+    var nowPaused = true
     func chatUIRequestPlayVoiceMessages(messageItems: [PonyChatUI.Entity.VoiceMessage]) {
+        nowPaused = false
         var i: UInt64 = 0
         for item in messageItems {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(3 * i * NSEC_PER_SEC)), dispatch_get_main_queue()) { () -> Void in
+                if self.nowPaused {
+                    return
+                }
+                self.nowPlayingItem = item
                 item.voicePlaying = true
                 item.voicePlayed = true
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(3 * i + 3 * NSEC_PER_SEC)), dispatch_get_main_queue()) { () -> Void in
@@ -170,6 +177,14 @@ class ViewController: UIViewController, PonyChatUIDelegate {
             }
             i++
         }
+    }
+    
+    func chatUIRequestPauseVoicePlaying(messageItem: PonyChatUI.Entity.VoiceMessage) {
+        nowPaused = true
+        if let nowPlayingItem = nowPlayingItem {
+            nowPlayingItem.voicePlaying = false
+        }
+        messageItem.voicePlaying = false
     }
 
 }
