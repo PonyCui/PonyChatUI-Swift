@@ -220,6 +220,10 @@ class ViewController: UIViewController, PonyChatUIDelegate, UITextFieldDelegate 
         }
         messageItem.voicePlaying = false
     }
+    
+    func chatUIRequestOpenUserPage(user: PonyChatUI.Entity.Message.Sender) {
+        print(user)
+    }
 
 }
 

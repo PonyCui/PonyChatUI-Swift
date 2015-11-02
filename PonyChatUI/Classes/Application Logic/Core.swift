@@ -18,6 +18,8 @@ public protocol PonyChatUIDelegate: NSObjectProtocol {
     
     func chatUIRequestPauseVoicePlaying(messageItem: PonyChatUI.Entity.VoiceMessage) -> Void
     
+    func chatUIRequestOpenUserPage(user: PonyChatUI.Entity.Message.Sender) -> Void
+    
 }
 
 @objc public class PonyChatUICore: NSObject {

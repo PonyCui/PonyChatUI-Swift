@@ -42,6 +42,8 @@ extension PonyChatUI.UserInterface {
             addSubnode(contentNode)
             contentNode.userInteractionEnabled = true
             contentNode.addSubnode(avatarNode)
+            avatarNode.addTarget(self, action: "handleAvatarTapped",
+                forControlEvents: ASControlNodeEvent.TouchUpInside)
             self.messageItem.userInterface = self
             if self.messageItem.messageSender != nil {
                 self.messageItem.messageSender!.userInterface = self
@@ -179,6 +181,12 @@ extension PonyChatUI.UserInterface {
                         item.executingBlock(message: messageItem, chatViewController: self.messagingViewController!)
                     }
                 }
+            }
+        }
+        
+        func handleAvatarTapped() {
+            if let coreDelegate = coreDelegate, let sender = messageItem.messageSender {
+                coreDelegate.chatUIRequestOpenUserPage(sender)
             }
         }
         
