@@ -14,6 +14,8 @@ extension PonyChatUI {
         
         internal weak var delegate: PonyChatUI.UserInterface.MainInteractor?
         
+        public var canFetchPreviousItems = false
+        
         internal var items: [Entity.Message]? = nil
         
         public init() {
@@ -22,7 +24,9 @@ extension PonyChatUI {
         
         public func insertItems(items: [Entity.Message]) {
             if self.items != nil {
-                self.items!.insertContentsOf(items, at: 0)
+                for item in items.reverse() {
+                    self.items!.insert(item, atIndex: 0)
+                }
                 if let delegate = delegate {
                     delegate.insertedMessages(items.count)
                 }
@@ -78,6 +82,18 @@ extension PonyChatUI {
                 }
             }
             return nextItems
+        }
+        
+        public var isFetchingPreviousItems = false
+        public func beginFetchPreviousItems() {
+            if isFetchingPreviousItems {
+                return
+            }
+            isFetchingPreviousItems = true
+        }
+        
+        public func endFetchPreviousItems() {
+            isFetchingPreviousItems = false
         }
         
     }

@@ -13,7 +13,7 @@ class ViewController: UIViewController, PonyChatUIDelegate {
     
     var preloaded = false
 
-    let messageManager = PonyChatUI.MessageManager()
+    let messageManager = DemoMessageManager()
     
     var chatViewController: PonyChatUI.UserInterface.MainViewController?
     var chatView: UIView?
@@ -172,5 +172,34 @@ class ViewController: UIViewController, PonyChatUIDelegate {
         }
     }
 
+}
+
+class DemoMessageManager: PonyChatUI.MessageManager {
+    
+    override init() {
+        super.init()
+        canFetchPreviousItems = true
+    }
+    
+    override func beginFetchPreviousItems() {
+        if isFetchingPreviousItems {
+            return
+        }
+        super.beginFetchPreviousItems()
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * NSEC_PER_SEC)), dispatch_get_main_queue()) { () -> Void in
+            var items: [PonyChatUI.Entity.Message] = []
+            for i in 0...50 {
+                var aSender = PonyChatUI.Entity.Message.Sender()
+                aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
+                aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
+                aSender.senderNickname = "Pony"
+                let message = PonyChatUI.Entity.TextMessage(mID: "text\(i)", mDate: NSDate(), text: "\(NSDate(timeIntervalSinceNow: NSTimeInterval(i) * 100).description)")
+                message.messageSender = aSender
+                items.append(message)
+            }
+            self.insertItems(items)
+            self.endFetchPreviousItems()
+        }
+    }
 }
 

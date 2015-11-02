@@ -114,6 +114,40 @@ extension PonyChatUI.UserInterface {
                     node.configureResumeStates()
                 }
             }
+            if indexPath.row == 0 && (messagingView.tracking || messagingView.dragging || messagingView.decelerating) {
+                if let manager = eventHandler.interactor.manager where manager.canFetchPreviousItems {
+                    messagingView.automaticallyAdjustsContentOffset = true
+                    manager.beginFetchPreviousItems()
+                    tableViewBeginLoadingItems()
+                }
+            }
+        }
+        
+        public func scrollViewDidScrollToTop(scrollView: UIScrollView) {
+            if let manager = eventHandler.interactor.manager where manager.canFetchPreviousItems {
+                messagingView.automaticallyAdjustsContentOffset = true
+                manager.beginFetchPreviousItems()
+                tableViewBeginLoadingItems()
+            }
+        }
+        
+        func tableViewInsertRows(count: Int) {
+            if messagingRows == 0 {
+                messagingView.reloadDataWithCompletion({ () -> Void in
+                    self.tableViewAutoScroll()
+                })
+                return
+            }
+            messagingView.beginUpdates()
+            for i in 0..<count {
+                let index = NSIndexPath(forRow: i, inSection: 0)
+                messagingView.insertRowsAtIndexPaths([index], withRowAnimation: .None)
+            }
+            if let items = eventHandler.interactor.manager?.items {
+                messagingRows = items.count
+            }
+            messagingView.endUpdatesAnimated(false) { (_) -> Void in
+            }
         }
         
         func tableViewAppendRows(count: Int) {
@@ -156,6 +190,20 @@ extension PonyChatUI.UserInterface {
                 }
             }
             messagingView.scrollToRowAtIndexPath(NSIndexPath(forRow: messagingRows - 1, inSection: 0), atScrollPosition: .Bottom, animated: animated)
+        }
+        
+        func tableViewBeginLoadingItems() {
+            let tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: messagingView.bounds.width, height: 44))
+            let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+            tableHeaderView.addSubview(activityIndicator)
+            activityIndicator.center = CGPoint(x: tableHeaderView.bounds.size.width / 2.0, y: tableHeaderView.bounds.size.height / 2.0 - 8.0)
+            activityIndicator.startAnimating()
+            messagingView.tableHeaderView = tableHeaderView
+        }
+        
+        func tableViewEndLoadingItems() {
+            messagingView.tableHeaderView = nil
+            messagingView.automaticallyAdjustsContentOffset = false
         }
         
     }
