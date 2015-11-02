@@ -20,6 +20,8 @@ public protocol PonyChatUIDelegate: NSObjectProtocol {
     
     func chatUIRequestOpenUserPage(user: PonyChatUI.Entity.Message.Sender) -> Void
     
+    func chatUIRequestResendMessage(messageItem: PonyChatUI.Entity.Message) -> Void
+    
 }
 
 @objc public class PonyChatUICore: NSObject {

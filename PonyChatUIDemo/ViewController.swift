@@ -224,6 +224,10 @@ class ViewController: UIViewController, PonyChatUIDelegate, UITextFieldDelegate 
     func chatUIRequestOpenUserPage(user: PonyChatUI.Entity.Message.Sender) {
         print(user)
     }
+    
+    func chatUIRequestResendMessage(messageItem: PonyChatUI.Entity.Message) {
+        print(messageItem)
+    }
 
 }
 

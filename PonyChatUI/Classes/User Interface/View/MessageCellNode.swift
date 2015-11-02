@@ -97,6 +97,7 @@ extension PonyChatUI.UserInterface {
                 if let indicatorNode = self.sendingIndicatorNode {
                     indicatorNode.removeFromSupernode()
                 }
+                self.sendingErrorNode!.addTarget(self, action: "handleErrorNodeTapped", forControlEvents: .TouchUpInside)
                 layoutSendingNodes()
             }
             else {
@@ -187,6 +188,12 @@ extension PonyChatUI.UserInterface {
         func handleAvatarTapped() {
             if let coreDelegate = coreDelegate, let sender = messageItem.messageSender {
                 coreDelegate.chatUIRequestOpenUserPage(sender)
+            }
+        }
+        
+        func handleErrorNodeTapped() {
+            if let coreDelegate = coreDelegate {
+                coreDelegate.chatUIRequestResendMessage(messageItem)
             }
         }
         
