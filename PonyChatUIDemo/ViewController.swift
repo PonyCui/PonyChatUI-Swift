@@ -58,6 +58,8 @@ class ViewController: UIViewController, PonyChatUIDelegate {
             addChildViewController(chatMain.0)
             view.addSubview(chatMain.1)
         }
+        
+        
     }
     
     func loadHistory() {

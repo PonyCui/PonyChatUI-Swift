@@ -33,7 +33,7 @@ extension PonyChatUI.UserInterface {
         public var footerView: UIView?
         public var footerViewHeight: CGFloat = 0.0 {
             didSet {
-                
+                layoutSubviewsWithAnimation()
             }
         }
         
@@ -69,7 +69,7 @@ extension PonyChatUI.UserInterface {
             }
         }
         
-        public func layoutSubviewsWithAnimation() {
+        private func layoutSubviewsWithAnimation() {
             if let footerView = footerView {
                 UIView.animateKeyframesWithDuration(0.3, delay: 0.0, options: [],
                     animations: { () -> Void in
@@ -213,6 +213,9 @@ extension PonyChatUI.UserInterface {
         }
         
         func tableViewAutoScroll(force force: Bool = false, animated: Bool = true) {
+            if messagingView.visibleNodes().count <= 0 {
+                return
+            }
             if messagingView.tracking {
                 return
             }
