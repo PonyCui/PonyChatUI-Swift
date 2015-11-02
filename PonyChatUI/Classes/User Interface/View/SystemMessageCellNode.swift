@@ -36,8 +36,8 @@ extension PonyChatUI.UserInterface {
         override func configureDatas() {
             super.configureDatas()
             if let messageItem = typedMessageItem {
-                let attributedString = NSAttributedString(string: messageItem.text,
-                    attributes: messagingConfigure.systemTextStyle)
+                let attributedString = bundleImageAttributedString(NSAttributedString(string: messageItem.text,
+                    attributes: messagingConfigure.systemTextStyle))
                 textNode.attributedString = attributedString
             }
         }
@@ -52,6 +52,27 @@ extension PonyChatUI.UserInterface {
         override func layout() {
             textNode.frame = CGRect(x: constrainedSizeForCalculatedSize.width / 2.0 - textNode.calculatedSize.width / 2.0, y: 5.0, width: textNode.calculatedSize.width, height: textNode.calculatedSize.height)
             backgroundNode.frame = CGRect(x: textNode.frame.origin.x - 8.0, y: textNode.frame.origin.y - 3.0, width: textNode.frame.size.width + 16.0, height: textNode.frame.size.height + 6.0)
+        }
+        
+        func bundleImageAttributedString(originAttributedString: NSAttributedString) -> NSAttributedString {
+            let regularExpression = try! NSRegularExpression(pattern: "\\[(.*?)\\]", options: NSRegularExpressionOptions())
+            let matches = regularExpression.matchesInString(originAttributedString.string, options: NSMatchingOptions(), range: NSMakeRange(0, originAttributedString.string.characters.count))
+            let mutableAttributedString: NSMutableAttributedString = originAttributedString.mutableCopy() as! NSMutableAttributedString
+            for match in matches.reverse() {
+                let imageName = (originAttributedString.string as NSString).substringWithRange(match.rangeAtIndex(1))
+                if let image = UIImage(named: imageName, inBundle: nil, compatibleWithTraitCollection: nil) {
+                    if let font = messagingConfigure.systemTextStyle[NSFontAttributeName] as? UIFont {
+                        let imageHeight = min(image.size.height, font.ascender)
+                        let centerOffset = (imageHeight - font.lineHeight) / 2.0
+                        let s = NSTextAttachment()
+                        s.image = image
+                        s.bounds = CGRectMake(0, centerOffset, imageHeight, imageHeight)
+                        let ss = NSAttributedString(attachment: s)
+                        mutableAttributedString.replaceCharactersInRange(match.range, withAttributedString: ss)
+                    }
+                }
+            }
+            return mutableAttributedString.copy() as! NSAttributedString
         }
         
     }

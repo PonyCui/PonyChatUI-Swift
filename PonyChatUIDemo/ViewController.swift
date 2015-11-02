@@ -66,7 +66,7 @@ class ViewController: UIViewController, PonyChatUIDelegate, UITextFieldDelegate 
     func loadHistory() {
         var items: [PonyChatUI.Entity.Message] = []
         
-        let systemMessage = PonyChatUI.Entity.SystemMessage(mID: "system", mDate: NSDate(), text: "这是一条系统消息")
+        let systemMessage = PonyChatUI.Entity.SystemMessage(mID: "system", mDate: NSDate(), text: "[播放] 这是一条系统消息 [垃圾]")
         items.append(systemMessage)
         
         func m_0() -> () {

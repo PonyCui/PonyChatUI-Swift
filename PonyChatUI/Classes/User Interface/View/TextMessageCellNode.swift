@@ -48,12 +48,33 @@ extension PonyChatUI.UserInterface {
                     textNode.delegate = self
                     textNode.userInteractionEnabled = true
                     textNode.linkAttributeNames = ["PCULinkAttributeName"]
-                    textNode.attributedString = linkedAttributedString(attributedString)
+                    textNode.attributedString = bundleImageAttributedString(linkedAttributedString(attributedString))
                 }
                 else {
-                    textNode.attributedString = attributedString
+                    textNode.attributedString = bundleImageAttributedString(attributedString)
                 }
             }
+        }
+        
+        func bundleImageAttributedString(originAttributedString: NSAttributedString) -> NSAttributedString {
+            let regularExpression = try! NSRegularExpression(pattern: "\\[(.*?)\\]", options: NSRegularExpressionOptions())
+            let matches = regularExpression.matchesInString(originAttributedString.string, options: NSMatchingOptions(), range: NSMakeRange(0, originAttributedString.string.characters.count))
+            let mutableAttributedString: NSMutableAttributedString = originAttributedString.mutableCopy() as! NSMutableAttributedString
+            for match in matches.reverse() {
+                let imageName = (originAttributedString.string as NSString).substringWithRange(match.rangeAtIndex(1))
+                if let image = UIImage(named: imageName, inBundle: nil, compatibleWithTraitCollection: nil) {
+                    if let font = messagingConfigure.textStyle[NSFontAttributeName] as? UIFont {
+                        let imageHeight = min(image.size.height, font.ascender)
+                        let centerOffset = (imageHeight - font.lineHeight) / 2.0
+                        let s = NSTextAttachment()
+                        s.image = image
+                        s.bounds = CGRectMake(0, centerOffset, imageHeight, imageHeight)
+                        let ss = NSAttributedString(attachment: s)
+                        mutableAttributedString.replaceCharactersInRange(match.range, withAttributedString: ss)
+                    }
+                }
+            }
+            return mutableAttributedString.copy() as! NSAttributedString
         }
         
         func linkText(text: String) -> Bool {
