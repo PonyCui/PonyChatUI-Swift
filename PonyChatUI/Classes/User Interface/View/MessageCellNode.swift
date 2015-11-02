@@ -156,10 +156,18 @@ extension PonyChatUI.UserInterface {
             }
             _menuViewController.titles = titles
             if sender.state == UIGestureRecognizerState.Began {
+                if let view = sender.view {
+                    view.alpha = 0.75
+                }
                 _menuViewController.delegate = self
                 var thePoint = self.view.convertPoint(mainContentRect.origin, toView: UIApplication.sharedApplication().keyWindow)
                 thePoint.x += (mainContentRect.width / 2.0)
                 _menuViewController.showMenuView(thePoint)
+            }
+            else if sender.state == UIGestureRecognizerState.Ended || sender.state == UIGestureRecognizerState.Cancelled || sender.state == UIGestureRecognizerState.Failed {
+                if let view = sender.view {
+                    view.alpha = 1.0
+                }
             }
         }
         

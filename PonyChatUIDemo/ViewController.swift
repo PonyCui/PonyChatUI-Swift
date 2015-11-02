@@ -62,18 +62,22 @@ class ViewController: UIViewController, PonyChatUIDelegate {
         
         func m_0() -> () {
             for i in 0...50 {
+                let random = Double(arc4random() % 200)
+                let mDate = NSDate(timeIntervalSinceNow: -86400 * 5 + 200 * Double(i) + random)
                 var aSender = PonyChatUI.Entity.Message.Sender()
                 aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
                 aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
                 aSender.senderNickname = "Pony"
-                let message = PonyChatUI.Entity.TextMessage(mID: "text\(i)", mDate: NSDate(), text: "\(NSDate().description)")
+                let message = PonyChatUI.Entity.TextMessage(mID: "text\(i)", mDate: mDate, text: "\(mDate.description)")
                 message.messageSender = aSender
                 items.append(message)
             }
         }
         
         func m_1() -> () {
-            let imageMessage = PonyChatUI.Entity.ImageMessage(mID: "image", mDate: NSDate(), imageURLString: "http://ww1.sinaimg.cn/large/c631b412jw1exizdhe4q2j21kw11x7fm.jpg", thumbURLString: "http://ww1.sinaimg.cn/bmiddle/c631b412jw1exizdhe4q2j21kw11x7fm.jpg", imageSize: CGSize(width: 2048, height: 1365))
+            let random = Double(arc4random() % 200)
+            let mDate = NSDate(timeIntervalSinceNow: -86400 * 3 + 200)
+            let imageMessage = PonyChatUI.Entity.ImageMessage(mID: "image", mDate: mDate, imageURLString: "http://ww1.sinaimg.cn/large/c631b412jw1exizdhe4q2j21kw11x7fm.jpg", thumbURLString: "http://ww1.sinaimg.cn/bmiddle/c631b412jw1exizdhe4q2j21kw11x7fm.jpg", imageSize: CGSize(width: 2048, height: 1365))
             var aSender = PonyChatUI.Entity.Message.Sender()
             aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
             aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
@@ -83,7 +87,9 @@ class ViewController: UIViewController, PonyChatUIDelegate {
         }
         
         func m_2() -> () {
-            let imageMessage = PonyChatUI.Entity.ImageMessage(mID: "gifimage", mDate: NSDate(), imageURLString: "http://pics.sc.chinaz.com/Files/pic/faces/2425/26.gif", thumbURLString: "http://pics.sc.chinaz.com/Files/pic/faces/2425/26.gif", imageSize: CGSize(width: 75, height: 75))
+            let random = Double(arc4random() % 200)
+            let mDate = NSDate(timeIntervalSinceNow: -86400 * 2 + 200)
+            let imageMessage = PonyChatUI.Entity.ImageMessage(mID: "gifimage", mDate: mDate, imageURLString: "http://pics.sc.chinaz.com/Files/pic/faces/2425/26.gif", thumbURLString: "http://pics.sc.chinaz.com/Files/pic/faces/2425/26.gif", imageSize: CGSize(width: 75, height: 75))
             var aSender = PonyChatUI.Entity.Message.Sender()
             aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
             aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
@@ -94,11 +100,13 @@ class ViewController: UIViewController, PonyChatUIDelegate {
         
         func m_3() -> () {
             for i in 0...50 {
+                let random = Double(arc4random() % 200)
+                let mDate = NSDate(timeIntervalSinceNow: -86400 * 4 + 200 * Double(i) + random)
                 var aSender = PonyChatUI.Entity.Message.Sender()
                 aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
                 aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
                 aSender.senderNickname = "Pony"
-                let message = PonyChatUI.Entity.VoiceMessage(mID: "voice\(i)", mDate: NSDate(), voiceURLString: "xxxxx", voiceDuration: Double(arc4random() % 100))
+                let message = PonyChatUI.Entity.VoiceMessage(mID: "voice\(i)", mDate: mDate, voiceURLString: "xxxxx", voiceDuration: Double(arc4random() % 100))
                 if i > 40 {
                     message.voicePlayed = false
                 }
@@ -196,6 +204,7 @@ class DemoMessageManager: PonyChatUI.MessageManager {
         canFetchPreviousItems = true
     }
     
+    var iii: Double = 10
     override func beginFetchPreviousItems() {
         if isFetchingPreviousItems {
             return
@@ -204,16 +213,19 @@ class DemoMessageManager: PonyChatUI.MessageManager {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * NSEC_PER_SEC)), dispatch_get_main_queue()) { () -> Void in
             var items: [PonyChatUI.Entity.Message] = []
             for i in 0...50 {
+                let random = Double(arc4random() % 200)
+                let mDate = NSDate(timeIntervalSinceNow: -86400 * self.iii + 200 * Double(i) + random)
                 var aSender = PonyChatUI.Entity.Message.Sender()
                 aSender.isOwnSender = arc4random() % 2 == 0 ? true : false
                 aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
                 aSender.senderNickname = "Pony"
-                let message = PonyChatUI.Entity.TextMessage(mID: "text\(i)", mDate: NSDate(), text: "\(NSDate(timeIntervalSinceNow: NSTimeInterval(i) * 100).description)")
+                let message = PonyChatUI.Entity.TextMessage(mID: "text\(arc4random())", mDate: mDate, text: "\(mDate.description)")
                 message.messageSender = aSender
                 items.append(message)
             }
             self.insertItems(items)
             self.endFetchPreviousItems()
+            self.iii++
         }
     }
 }

@@ -22,9 +22,9 @@ extension PonyChatUI.UserInterface {
             }
         }
         
-        func appendedMessage() {
+        func appendedMessage(count: Int) {
             if let delegate = delegate {
-                delegate.appendMessage(1)
+                delegate.appendMessage(count)
             }
         }
         

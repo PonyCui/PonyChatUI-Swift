@@ -51,7 +51,7 @@ extension PonyChatUI.UserInterface {
         
         override func layout() {
             textNode.frame = CGRect(x: constrainedSizeForCalculatedSize.width / 2.0 - textNode.calculatedSize.width / 2.0 - 8.0, y: 5.0, width: textNode.calculatedSize.width, height: textNode.calculatedSize.height)
-            backgroundNode.frame = CGRect(x: textNode.frame.origin.x - 8.0, y: textNode.frame.origin.y - 5.0, width: textNode.frame.size.width + 16.0, height: textNode.frame.size.height + 10.0)
+            backgroundNode.frame = CGRect(x: textNode.frame.origin.x - 8.0, y: textNode.frame.origin.y - 3.0, width: textNode.frame.size.width + 16.0, height: textNode.frame.size.height + 6.0)
         }
         
     }

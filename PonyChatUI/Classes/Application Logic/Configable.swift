@@ -23,7 +23,7 @@ extension PonyChatUI.UserInterface {
         
         public static var sharedConfigure: Configure = Configure()
         
-        public var cellGaps: CGFloat = 12.0
+        public var cellGaps: CGFloat = 8.0
         
         public var nicknameShow: Bool = false
         public var nicknameStyle = [String: AnyObject]()
