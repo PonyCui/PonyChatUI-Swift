@@ -9,7 +9,7 @@
 import UIKit
 import PonyChatUI
 
-class ViewController: UIViewController, PonyChatUIDelegate {
+class ViewController: UIViewController, PonyChatUIDelegate, UITextFieldDelegate {
     
     var preloaded = false
 
@@ -57,6 +57,9 @@ class ViewController: UIViewController, PonyChatUIDelegate {
             chatView = chatMain.1
             addChildViewController(chatMain.0)
             view.addSubview(chatMain.1)
+        }
+        if let textField = toolViewController.view.viewWithTag(1000) as? UITextField {
+            textField.delegate = self
         }
     }
     
@@ -164,6 +167,20 @@ class ViewController: UIViewController, PonyChatUIDelegate {
                 self.navigationController?.pushViewController(nextViewController, animated: true)
             })
         }
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if let text = textField.text {
+            let textMessage = PonyChatUI.Entity.TextMessage(mID: "Send.\(NSDate().description)", mDate: NSDate(), text: text)
+            var aSender = PonyChatUI.Entity.Message.Sender()
+            aSender.isOwnSender = true
+            aSender.senderAvatarURLString = "https://avatars1.githubusercontent.com/u/5013664?v=3&s=460"
+            aSender.senderNickname = "Pony"
+            textMessage.messageSender = aSender
+            messageManager.appendItem(textMessage)
+        }
+        textField.text = nil
+        return true
     }
     
     func chatUIRequestOpenURL(URL: NSURL) {
